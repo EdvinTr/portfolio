@@ -1,8 +1,39 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Fragment } from "react";
+import { classnames } from "tailwindcss-classnames";
+
 interface NavbarProps {}
 
+const activeRouteClassNames = "border-red-500 border-opacity-75 ";
+
+const navLinkClassNames = classnames(
+  "font-semibold",
+  "hover:underline",
+  "p-2",
+  "border-2",
+  "transition-colors",
+  "duration-150",
+  "rounded-lg"
+);
+
+const routes = [
+  {
+    path: "/projects",
+    name: "Projects",
+  },
+  {
+    path: "/contact",
+    name: "Contact",
+  },
+];
 export const Navbar: React.FC<NavbarProps> = ({}) => {
+  const router = useRouter();
+
+  const isActivePath = (path: string) => {
+    return router.pathname === path;
+  };
+
   return (
     <Fragment>
       <nav className="flex items-center justify-between">
@@ -12,12 +43,19 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
           </a>
         </Link>
         <div className="space-x-8">
-          <Link href="/projects">
-            <a className="font-semibold hover:underline">Projects</a>
-          </Link>
-          <Link href="/contact">
-            <a className="font-semibold hover:underline">Contact</a>
-          </Link>
+          {routes.map(({ name, path }, idx) => {
+            return (
+              <Link href={path} key={idx}>
+                <a
+                  className={`${navLinkClassNames} ${
+                    isActivePath(path) ? activeRouteClassNames : "border-white"
+                  }`}
+                >
+                  {name}
+                </a>
+              </Link>
+            );
+          })}
         </div>
       </nav>
     </Fragment>
