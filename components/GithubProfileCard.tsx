@@ -5,6 +5,7 @@ import {
 } from "@heroicons/react/outline";
 import { CodeIcon } from "@heroicons/react/solid";
 import React, { Fragment } from "react";
+import { hoverScaleClassNames } from "../styles/utilStyles";
 import { GithubProfileWithContributions } from "../utils/getGithubProfile";
 interface GithubProfileCardProps {
   githubProfile: GithubProfileWithContributions;
@@ -21,7 +22,9 @@ export const GithubProfileCard: React.FC<GithubProfileCardProps> = ({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <div className="bg-red-50 rounded-md my-5 p-5 hover:scale-105 transition-transform duration-150 ease-in-out">
+        <div
+          className={`bg-red-50 rounded-md my-5 p-5 ${hoverScaleClassNames}`}
+        >
           <div className="flex items-center">
             <img
               src={githubProfile.avatar_url}

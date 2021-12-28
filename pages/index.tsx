@@ -1,8 +1,10 @@
 import memoryCache from "memory-cache";
 import type { GetStaticProps, NextPage } from "next";
 import Image from "next/image";
+import { classnames } from "tailwindcss-classnames";
 import { GithubProfileCard } from "../components/GithubProfileCard";
 import { MEMORY_CACHE_KEY } from "../constants";
+import { hoverScaleClassNames } from "../styles/utilStyles";
 import { getGithubContributions } from "../utils/getGithubContributions";
 import {
   getGithubProfile,
@@ -11,6 +13,124 @@ import {
 interface HomePageProps {
   githubProfile?: GithubProfileWithContributions;
 }
+
+const skills = [
+  {
+    name: "HTML",
+    labelBackgroundColor: "bg-amber-200",
+    icon: "devicon-html5-plain",
+  },
+  {
+    name: "CSS",
+    labelBackgroundColor: classnames("bg-blue-200"),
+    icon: "devicon-css3-plain",
+  },
+  {
+    name: "JavaScript",
+    labelBackgroundColor: classnames("bg-yellow-200"),
+    icon: "devicon-javascript-plain",
+  },
+  {
+    name: "TypeScript",
+    labelBackgroundColor: classnames("bg-blue-200"),
+    icon: "devicon-typescript-plain",
+  },
+  {
+    name: "React",
+    labelBackgroundColor: classnames("bg-blue-200"),
+    icon: "devicon-react-plain",
+  },
+  {
+    name: "Vue",
+    labelBackgroundColor: classnames("bg-green-200"),
+    icon: "devicon-vuejs-plain",
+  },
+  {
+    name: "Next",
+    labelBackgroundColor: classnames("bg-gray-200"),
+    icon: "devicon-nextjs-original",
+  },
+  {
+    name: "Tailwind",
+    labelBackgroundColor: classnames("bg-blue-300"),
+    icon: "devicon-tailwindcss-plain",
+  },
+  {
+    name: "Nest",
+    labelBackgroundColor: classnames("bg-red-200"),
+    icon: "devicon-nestjs-plain",
+  },
+  {
+    name: "Node",
+    labelBackgroundColor: classnames("bg-green-200"),
+    icon: "devicon-nodejs-plain",
+  },
+  {
+    name: "Express",
+    labelBackgroundColor: classnames("bg-gray-200"),
+    icon: "devicon-express-original",
+  },
+  {
+    name: "Spring",
+    labelBackgroundColor: classnames("bg-green-200"),
+    icon: "devicon-spring-plain",
+  },
+  {
+    name: "git",
+    labelBackgroundColor: classnames("bg-gray-200"),
+    icon: "devicon-git-plain",
+  },
+  {
+    name: "MySQL",
+    labelBackgroundColor: "bg-amber-200",
+    icon: "devicon-mysql-plain",
+  },
+  {
+    name: "MongoDB",
+    labelBackgroundColor: classnames("bg-green-300"),
+    icon: "devicon-mongodb-plain",
+  },
+  {
+    name: "PostgreSQL",
+    labelBackgroundColor: classnames("bg-blue-300"),
+    icon: "devicon-postgresql-plain",
+  },
+  {
+    name: "GraphQL",
+    labelBackgroundColor: classnames("bg-purple-200"),
+    icon: "devicon-graphql-plain",
+  },
+  {
+    name: "Jest",
+    labelBackgroundColor: "bg-amber-300",
+    icon: "devicon-jest-plain",
+  },
+  {
+    name: "Redux",
+    labelBackgroundColor: classnames("bg-purple-300"),
+    icon: "devicon-redux-plain",
+  },
+  {
+    name: "Jupyter",
+    labelBackgroundColor: "bg-amber-400",
+    icon: "devicon-jupyter-plain",
+  },
+  {
+    name: "Python",
+    labelBackgroundColor: classnames("bg-blue-200"),
+    icon: "devicon-python-plain",
+  },
+  {
+    name: "Java",
+    labelBackgroundColor: classnames("bg-red-300"),
+    icon: "devicon-java-plain",
+  },
+  {
+    name: "Figma",
+    labelBackgroundColor: classnames("bg-purple-300"),
+    icon: "devicon-figma-plain",
+  },
+];
 
 const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
   return (
@@ -38,6 +158,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
             </h3>
             <i className="devicon-github-original text-md"></i>
           </div>
+          {/* github profile card */}
           {githubProfile ? (
             <GithubProfileCard githubProfile={githubProfile} />
           ) : (
@@ -46,7 +167,9 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className="bg-red-50 rounded-md my-5 p-5 hover:scale-105 transition-transform duration-150 ease-in-out">
+              <div
+                className={`bg-red-50 rounded-md my-5 p-5 ${hoverScaleClassNames}`}
+              >
                 <Image
                   src={require("../public/question-mark.png")}
                   width={120}
@@ -56,6 +179,29 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
               </div>
             </a>
           )}
+        </div>
+      </div>
+      <div>
+        <h3 className="text-3xl font-semibold underline pb-6 decoration-red-500">
+          Skills
+        </h3>
+        <div className=" grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-y-8">
+          {/* skill */}
+          {skills.map((skill, idx) => {
+            return (
+              <div
+                className={`max-w-[5.5rem] ${hoverScaleClassNames} hover:scale-110`}
+                key={idx}
+              >
+                <div
+                  className={`${skill.labelBackgroundColor} text-xs w-24 font-semibold mb-4 text-center`}
+                >
+                  {skill.name.toUpperCase()}
+                </div>
+                <i className={`text-8xl ${skill.icon}`}></i>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
