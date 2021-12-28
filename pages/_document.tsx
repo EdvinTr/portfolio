@@ -27,6 +27,11 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css"
           />
+          <title>Edvin Trönnberg</title>
+          <meta
+            name="description"
+            content="Edvin Trönnbergs portfolio website that includes projects, skills, contact information and more."
+          />
         </Head>
         <body>
           <Main />
