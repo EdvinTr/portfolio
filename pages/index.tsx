@@ -1,5 +1,6 @@
 import memoryCache from "memory-cache";
 import type { GetStaticProps, NextPage } from "next";
+import Image from "next/image";
 import { GithubProfileCard } from "../components/GithubProfileCard";
 import { MEMORY_CACHE_KEY } from "../constants";
 import { getGithubContributions } from "../utils/getGithubContributions";
@@ -12,11 +13,6 @@ interface HomePageProps {
 }
 
 const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
-  // TODO:
-  // ! FIX THIS
-  if (!githubProfile) {
-    return <div>No profile</div>;
-  }
   return (
     <div className="pt-12 ">
       <div className="md:grid md:grid-cols-5">
@@ -42,7 +38,24 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
             </h3>
             <i className="devicon-github-original text-md"></i>
           </div>
-          <GithubProfileCard githubProfile={githubProfile} />
+          {githubProfile ? (
+            <GithubProfileCard githubProfile={githubProfile} />
+          ) : (
+            <a
+              href="https://github.com/EdvinTr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-red-50 rounded-md my-5 p-5 hover:scale-105 transition-transform duration-150 ease-in-out">
+                <Image
+                  src={require("../public/question-mark.png")}
+                  width={120}
+                  height={120}
+                  className="rounded-full "
+                />
+              </div>
+            </a>
+          )}
         </div>
       </div>
     </div>
