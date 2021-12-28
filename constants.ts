@@ -1,0 +1,3 @@
+export enum MEMORY_CACHE_KEY {
+  GITHUB_PROFILE = "GITHUB_PROFILE",
+}

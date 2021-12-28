@@ -42,7 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
             <h1 className="font-extrabold text-gray-800 text-3xl">EdvinTr</h1>
           </a>
         </Link>
-        <div className="space-x-4 md:space-x-8">
+        <div className="space-x-4 md:space-x-6">
           {routes.map(({ name, path }, idx) => {
             return (
               <Link href={path} key={idx}>
