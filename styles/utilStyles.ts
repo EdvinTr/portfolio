@@ -1,1 +1,2 @@
-export const hoverScaleClassNames = "hover:scale-105 transition-transform ";
+export const hoverScaleClassNames =
+  "hover:scale-105 transition-transform duration-150 ";

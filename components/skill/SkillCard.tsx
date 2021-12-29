@@ -1,5 +1,4 @@
 import React from "react";
-import { hoverScaleClassNames } from "../../styles/utilStyles";
 import { SkillData } from "./skills-data";
 
 interface SkillCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,7 +15,7 @@ export const SkillCard: React.FC<SkillCardProps> = ({
       href={skill.href}
       rel="noopener noreferrer"
       target="_blank"
-      className={`${hoverScaleClassNames} hover:scale-110`}
+      className={`hover:scale-110 transition-transform duration-150`}
       aria-label={`${skill.name} documentation`}
     >
       <div className={`max-w-[5.5rem]`} {...props}>
