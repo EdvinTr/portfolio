@@ -84,10 +84,10 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
       getGithubContributions(username),
       getGithubProfile(username),
     ]);
-    if (!data) {
+    const [contributions, profile] = data;
+    if (!contributions || !profile) {
       throw new Error();
     }
-    const [contributions, profile] = data;
     const githubData: GithubProfileWithContributions = {
       ...profile?.data,
       contributions,
