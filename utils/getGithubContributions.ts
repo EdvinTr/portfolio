@@ -14,9 +14,5 @@ export const getGithubContributions = async (
     .split("\n")[0];
 
   const result = Number(contributions.split(",").join(""));
-
-  if (result === NaN) {
-    return "N/A";
-  }
-  return result;
+  return result === NaN ? "N/A" : result;
 };

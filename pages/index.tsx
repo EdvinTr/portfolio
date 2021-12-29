@@ -1,9 +1,9 @@
-import { ArrowRightIcon } from "@heroicons/react/solid";
 import memoryCache from "memory-cache";
 import type { GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SpinnerCircularFixed } from "spinners-react";
+import { GithubEventCard } from "../components/github-events/GithubEventCard";
 import { GithubProfileCard } from "../components/GithubProfileCard";
 import { SkillCardList } from "../components/skill/SkillCardList";
 import { GITHUB_USERNAME, MEMORY_CACHE_KEY } from "../constants";
@@ -27,9 +27,13 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
     GithubEvent[] | null
   >(null);
   const [isLoadingGithubEvents, setIsLoadingGithubEvents] = useState(false);
+  const [githubEventsError, setGithubEventsError] = useState<string | null>(
+    null
+  );
   useEffect(() => {
     const fetchGithubEvents = async () => {
       try {
+        setGithubEventsError(null);
         setIsLoadingGithubEvents(true);
         const githubEvents = await getGithubEvents(GITHUB_USERNAME);
         if (!githubEvents || !githubEvents.data) {
@@ -38,34 +42,20 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
         setIsLoadingGithubEvents(false);
         setGithubEventsData(githubEvents.data);
       } catch (err: any) {
-        // TODO: set error message or something?
         setIsLoadingGithubEvents(false);
+        setGithubEventsError("Failed to load Github events");
       }
     };
     fetchGithubEvents();
   }, []);
 
-  const formatGithubEventType = (type: string): JSX.Element => {
-    switch (type) {
-      case "PushEvent":
-        return <span className="text-green-600">Push</span>;
-
-      case "CreateEvent":
-        return <span className="text-green-600">Create</span>;
-
-      case "IssuesEvent":
-        return <span className="text-orange-400">Issue</span>;
-      default:
-        return <span>{type}</span>;
-    }
-  };
   return (
     <div className="pt-12 ">
       <div className="md:grid md:grid-cols-5">
         <div className="md:col-span-3 md:pr-8">
           <h2 className={`${headingClassNames}`}>About Me</h2>
           {/* // TODO: should calculate (current date - november 2019) */}
-          <p className="py-5">
+          <p className="py-5 ">
             Hey! I'm Edvin, a dependable web developer. I have been coding
             professionally for over a year, and amateur for over four years. I
             am always eager to learn new technologies and techniques. My primary
@@ -103,11 +93,10 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           )}
         </div>
       </div>
-      <div className="">
-        <h3 className={`${headingClassNames} pb-6`}>Skills</h3>
-        <SkillCardList />
-      </div>
-      <div className="py-8 lg:py-40">
+      <h3 className={`${headingClassNames} pb-6`}>Skills</h3>
+      <SkillCardList />
+      {/* dashboard section */}
+      <div className="py-8 lg:py-32">
         <h3 className={`${headingClassNames} `}>Personal Dashboard</h3>
         <div className="border-l-[3px] border-red-500 mt-4 pl-2">
           <h5 className={`text-xl font-semibold`}>GitHub</h5>
@@ -123,50 +112,13 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
             className="mt-4"
           />
         )}
-        {githubEventsData && (
-          <div>
-            {githubEventsData.map((githubEvent, idx) => {
-              return (
-                <div
-                  key={idx}
-                  className="bg-gray-50 my-4 p-4 rounded-xl max-w-xl shadow-md"
-                >
-                  <div className="flex items-start">
-                    {/* profile image */}
-                    <img
-                      src={githubEvent.actor.avatar_url}
-                      className="w-10 h-10 rounded-full"
-                      alt={`${githubEvent.actor.login} profile image`}
-                    />
-                    <div className="pl-3">
-                      {/* account name */}
-                      <div className="font-semibold ">
-                        {githubEvent.actor.login}{" "}
-                      </div>
-                      {/* event creation date */}
-                      <div className="text-xs opacity-75">
-                        {githubEvent.created_at.replace(/[TZ]/g, " ")}
-                      </div>
-                    </div>
-                  </div>
-                  {/* event details */}
-                  <div className="text-sm pl-[52px] py-2 flex items-center">
-                    {formatGithubEventType(githubEvent.type)}
-                    <ArrowRightIcon className="w-4 h-4 mx-2" />
-                    <a
-                      href={`https://github.com/${githubEvent.repo.name}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="text-blue-500 hover:text-blue-600"
-                    >
-                      {githubEvent.repo.name}
-                    </a>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        {githubEventsError && (
+          <span className="text-red-500 block pt-4">{githubEventsError}</span>
         )}
+        {githubEventsData &&
+          githubEventsData.map((githubEvent, idx) => {
+            return <GithubEventCard githubEvent={githubEvent} key={idx} />;
+          })}
       </div>
     </div>
   );
@@ -178,11 +130,10 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
     return { props: { githubProfile: value } };
   }
   try {
-    const data = await Promise.all([
+    const [contributions, profile] = await Promise.all([
       getGithubContributions(GITHUB_USERNAME),
       getGithubProfile(GITHUB_USERNAME),
     ]);
-    const [contributions, profile] = data;
     if (!contributions || !profile) {
       throw new Error();
     }
