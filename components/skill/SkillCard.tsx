@@ -12,11 +12,13 @@ export const SkillCard: React.FC<SkillCardProps> = ({
   ...props
 }) => {
   return (
-    <a href={skill.href} rel="noopener noreferrer" target="_blank">
-      <div
-        className={`max-w-[5.5rem] ${hoverScaleClassNames} hover:scale-110 `}
-        {...props}
-      >
+    <a
+      href={skill.href}
+      rel="noopener noreferrer"
+      target="_blank"
+      className={`${hoverScaleClassNames} hover:scale-110`}
+    >
+      <div className={`max-w-[5.5rem]`} {...props}>
         <div
           className={`${skill.labelBackgroundColor} text-xs w-24 font-semibold mb-4 text-center`}
         >
