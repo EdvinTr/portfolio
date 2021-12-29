@@ -19,6 +19,7 @@ interface HomePageProps {
   githubProfile?: GithubProfileWithContributions;
 }
 
+const formatDateRegex = new RegExp(/\[TZ]/, "g");
 const headingClassNames = "text-3xl font-semibold underline decoration-red-500";
 
 const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
@@ -107,12 +108,29 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
             className="mt-4"
           />
         )}
-        {/*  {githubEventsData && (
+        {githubEventsData && (
           <div>
             {githubEventsData.map((githubEvent, idx) => {
               return (
-                <div key={idx}>
-                  <div>{githubEvent.actor.login} </div>
+                <div key={idx} className="bg-gray-100 my-4 rounded-xl">
+                  <div className="flex items-start p-4">
+                    {/* profile image */}
+                    <img
+                      src={githubEvent.actor.avatar_url}
+                      className="w-10 h-10 rounded-full"
+                      alt={`${githubEvent.actor.login} profile image`}
+                    />
+                    {/* account name */}
+                    <div className="">
+                      <div className="font-semibold pl-2">
+                        {githubEvent.actor.login}{" "}
+                      </div>
+                      <div className="text-xs opacity-75">
+                        {githubEvent.created_at.replace(/[TZ]/g, " ")}
+                      </div>
+                    </div>
+                  </div>
+
                   <div>
                     made a new {githubEvent.type} to {githubEvent.repo.url}
                   </div>
@@ -120,7 +138,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
               );
             })}
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );
