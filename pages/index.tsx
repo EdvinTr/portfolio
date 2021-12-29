@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@heroicons/react/solid";
 import memoryCache from "memory-cache";
 import type { GetStaticProps, NextPage } from "next";
 import Image from "next/image";
@@ -19,7 +20,6 @@ interface HomePageProps {
   githubProfile?: GithubProfileWithContributions;
 }
 
-const formatDateRegex = new RegExp(/\[TZ]/, "g");
 const headingClassNames = "text-3xl font-semibold underline decoration-red-500";
 
 const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
@@ -44,6 +44,21 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
     };
     fetchGithubEvents();
   }, []);
+
+  const formatGithubEventType = (type: string): JSX.Element => {
+    switch (type) {
+      case "PushEvent":
+        return <span className="text-green-600">Push</span>;
+
+      case "CreateEvent":
+        return <span className="text-green-600">Create</span>;
+
+      case "IssuesEvent":
+        return <span className="text-orange-400">Issue</span>;
+      default:
+        return <span>{type}</span>;
+    }
+  };
   return (
     <div className="pt-12 ">
       <div className="md:grid md:grid-cols-5">
@@ -92,8 +107,8 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
         <h3 className={`${headingClassNames} pb-6`}>Skills</h3>
         <SkillCardList />
       </div>
-      <div className="py-8">
-        <h3 className={`${headingClassNames}`}>Personal Dashboard</h3>
+      <div className="py-8 lg:py-40">
+        <h3 className={`${headingClassNames} `}>Personal Dashboard</h3>
         <div className="border-l-[3px] border-red-500 mt-4 pl-2">
           <h5 className={`text-xl font-semibold`}>GitHub</h5>
           <p>Most Recent Actions</p>
@@ -112,27 +127,40 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           <div>
             {githubEventsData.map((githubEvent, idx) => {
               return (
-                <div key={idx} className="bg-gray-100 my-4 rounded-xl">
-                  <div className="flex items-start p-4">
+                <div
+                  key={idx}
+                  className="bg-gray-50 my-4 p-4 rounded-xl max-w-xl shadow-md"
+                >
+                  <div className="flex items-start">
                     {/* profile image */}
                     <img
                       src={githubEvent.actor.avatar_url}
                       className="w-10 h-10 rounded-full"
                       alt={`${githubEvent.actor.login} profile image`}
                     />
-                    {/* account name */}
-                    <div className="">
-                      <div className="font-semibold pl-2">
+                    <div className="pl-3">
+                      {/* account name */}
+                      <div className="font-semibold ">
                         {githubEvent.actor.login}{" "}
                       </div>
+                      {/* event creation date */}
                       <div className="text-xs opacity-75">
                         {githubEvent.created_at.replace(/[TZ]/g, " ")}
                       </div>
                     </div>
                   </div>
-
-                  <div>
-                    made a new {githubEvent.type} to {githubEvent.repo.url}
+                  {/* event details */}
+                  <div className="text-sm pl-[52px] py-2 flex items-center">
+                    {formatGithubEventType(githubEvent.type)}
+                    <ArrowRightIcon className="w-4 h-4 mx-2" />
+                    <a
+                      href={`https://github.com/${githubEvent.repo.name}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="text-blue-500 hover:text-blue-600"
+                    >
+                      {githubEvent.repo.name}
+                    </a>
                   </div>
                 </div>
               );

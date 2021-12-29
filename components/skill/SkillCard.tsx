@@ -15,7 +15,7 @@ export const SkillCard: React.FC<SkillCardProps> = ({
       href={skill.href}
       rel="noopener noreferrer"
       target="_blank"
-      className={`hover:scale-110 transition-transform duration-150`}
+      className={`hover:scale-110 transition-transform duration-150 `}
       aria-label={`${skill.name} documentation`}
     >
       <div className={`max-w-[5.5rem]`} {...props}>

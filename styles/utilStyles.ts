@@ -8,3 +8,5 @@ export const hoverScaleClassNames = classnames(
   "duration-150",
   "ease-in-out"
 );
+
+export const flexItemsCenter = classnames("flex", "items-center");
