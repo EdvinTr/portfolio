@@ -5,9 +5,9 @@ interface SkillCardListProps {}
 
 export const SkillCardList: React.FC<SkillCardListProps> = ({}) => {
   return (
-    <div className=" grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-y-8">
+    <div className="flex flex-row flex-wrap gap-7 lg:gap-8">
       {skillsData.map((skill, idx) => {
-        return <SkillCard skill={skill} key={idx} />;
+        return <SkillCard skill={skill} key={idx} className="" />;
       })}
     </div>
   );
