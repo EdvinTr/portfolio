@@ -17,6 +17,7 @@ export const SkillCard: React.FC<SkillCardProps> = ({
       rel="noopener noreferrer"
       target="_blank"
       className={`${hoverScaleClassNames} hover:scale-110`}
+      aria-label={`${skill.name} documentation`}
     >
       <div className={`max-w-[5.5rem]`} {...props}>
         <div

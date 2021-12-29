@@ -39,10 +39,12 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
       <nav className="flex items-center justify-between">
         <Link href="/" passHref>
           <a>
-            <h1 className="font-extrabold text-gray-800 text-3xl">EdvinTr</h1>
+            <h1 className="font-extrabold text-gray-800 text-3xl">
+              Edvin Trönnberg
+            </h1>
           </a>
         </Link>
-        <div className="space-x-4 md:space-x-6">
+        <div className="space-x-2 ">
           {routes.map(({ name, path }, idx) => {
             return (
               <Link href={path} key={idx}>
