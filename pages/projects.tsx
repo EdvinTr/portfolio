@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import { MyContainer } from "../components/MyContainer";
+import { headingClassNames } from "../styles/utilStyles";
 
 const ProjectsPage: NextPage = () => {
   return (
-    <MyContainer className="py-4">
-      <div>Here is the projects page</div>
-    </MyContainer>
+    <div className="pt-12">
+      <h2 className={`${headingClassNames}`}>Projects</h2>
+    </div>
   );
 };
 

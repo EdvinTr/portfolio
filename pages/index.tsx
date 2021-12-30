@@ -7,7 +7,7 @@ import { GithubEventCard } from "../components/github-events/GithubEventCard";
 import { GithubProfileCard } from "../components/GithubProfileCard";
 import { SkillCardList } from "../components/skill/SkillCardList";
 import { GITHUB_USERNAME, MEMORY_CACHE_KEY } from "../constants";
-import { hoverScaleClassNames } from "../styles/utilStyles";
+import { headingClassNames, hoverScaleClassNames } from "../styles/utilStyles";
 import { GithubEvent } from "../typings/GithubEventResponse.interface";
 import { calculateYearsOfCodingExperience } from "../utils/calculateYearsOfCodingExperience";
 import { getGithubContributions } from "../utils/network-requests/getGithubContributions";
@@ -16,9 +16,6 @@ import {
   getGithubProfile,
   GithubProfileWithContributions,
 } from "../utils/network-requests/getGithubProfile";
-
-const headingClassNames =
-  "text-2xl md:text-3xl font-semibold underline decoration-red-500";
 
 const numberWords = [
   "zero",

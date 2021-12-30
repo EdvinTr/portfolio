@@ -10,3 +10,5 @@ export const hoverScaleClassNames = classnames(
 );
 
 export const flexItemsCenter = classnames("flex", "items-center");
+export const headingClassNames =
+  "text-2xl md:text-3xl font-semibold underline decoration-red-500";
