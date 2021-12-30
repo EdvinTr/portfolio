@@ -6,7 +6,7 @@ import {
 import { CodeIcon } from "@heroicons/react/solid";
 import React, { Fragment } from "react";
 import { flexItemsCenter, hoverScaleClassNames } from "../styles/utilStyles";
-import { GithubProfileWithContributions } from "../utils/getGithubProfile";
+import { GithubProfileWithContributions } from "../utils/network-requests/getGithubProfile";
 interface GithubProfileCardProps {
   githubProfile: GithubProfileWithContributions;
 }
@@ -23,7 +23,7 @@ export const GithubProfileCard: React.FC<GithubProfileCardProps> = ({
         rel="noopener noreferrer"
       >
         <div
-          className={`bg-red-50 rounded-md my-5 p-5 ${hoverScaleClassNames} shadow-md`}
+          className={`bg-red-50 rounded-md my-5 p-5 ${hoverScaleClassNames} overflow-hidden shadow-md`}
         >
           <div className={`${flexItemsCenter}`}>
             <img
@@ -34,7 +34,7 @@ export const GithubProfileCard: React.FC<GithubProfileCardProps> = ({
             {/* profile info */}
             <div className="pl-6">
               <h4 className="font-semibold">{githubProfile?.login}</h4>
-              <div className="space-y-[0.15rem]">
+              <div className="space-y-[0.15rem] text-xs sm:text-sm lg:text-base">
                 <div className={`${flexItemsCenter}`}>
                   <BookmarkIcon className={iconClassNames} />
                   {githubProfile?.public_repos} Projects

@@ -30,11 +30,13 @@ export const GithubEventCard: React.FC<GithubEventCardProps> = ({
         <img
           src={githubEvent.actor.avatar_url}
           className="w-10 h-10 rounded-full"
-          alt={`${githubEvent.actor.login} profile image`}
+          alt={`${githubEvent.actor.login} profile`}
         />
         <div className="pl-3">
           {/* account name */}
-          <div className="font-semibold ">{githubEvent.actor.login} </div>
+          <div className="font-semibold text-sm sm:text-base">
+            {githubEvent.actor.login}{" "}
+          </div>
           {/* event creation date */}
           <div className="text-xs opacity-75">
             {githubEvent.created_at.replace(/[TZ]/g, " ")}
@@ -42,7 +44,7 @@ export const GithubEventCard: React.FC<GithubEventCardProps> = ({
         </div>
       </div>
       {/* event details */}
-      <div className="text-sm pl-[52px] py-2 flex items-center">
+      <div className="text-xs md:text-sm pl-[52px] py-2 flex items-center">
         {formatGithubEventType(githubEvent.type)}
         <ArrowRightIcon className="w-4 h-4 mx-2" />
         <a

@@ -9,60 +9,92 @@ import { SkillCardList } from "../components/skill/SkillCardList";
 import { GITHUB_USERNAME, MEMORY_CACHE_KEY } from "../constants";
 import { hoverScaleClassNames } from "../styles/utilStyles";
 import { GithubEvent } from "../typings/GithubEventResponse.interface";
-import { getGithubContributions } from "../utils/getGithubContributions";
-import { getGithubEvents } from "../utils/getGithubEvents";
+import { calculateYearsOfCodingExperience } from "../utils/calculateYearsOfCodingExperience";
+import { getGithubContributions } from "../utils/network-requests/getGithubContributions";
+import { getGithubEvents } from "../utils/network-requests/getGithubEvents";
 import {
   getGithubProfile,
   GithubProfileWithContributions,
-} from "../utils/getGithubProfile";
+} from "../utils/network-requests/getGithubProfile";
 
+const headingClassNames =
+  "text-2xl md:text-3xl font-semibold underline decoration-red-500";
+
+const numberWords = [
+  "zero",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+  "ten",
+];
 interface HomePageProps {
   githubProfile?: GithubProfileWithContributions;
 }
 
-const headingClassNames = "text-3xl font-semibold underline decoration-red-500";
-
+interface GithubEventsState {
+  data: GithubEvent[] | null;
+  isLoading: boolean;
+  error: null | string;
+}
 const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
-  const [githubEventsData, setGithubEventsData] = useState<
-    GithubEvent[] | null
-  >(null);
-  const [isLoadingGithubEvents, setIsLoadingGithubEvents] = useState(false);
-  const [githubEventsError, setGithubEventsError] = useState<string | null>(
-    null
-  );
+  const [githubEventsData, setGithubEventsData] = useState<GithubEventsState>({
+    isLoading: false,
+    data: null,
+    error: null,
+  });
   useEffect(() => {
     const fetchGithubEvents = async () => {
       try {
-        setGithubEventsError(null);
-        setIsLoadingGithubEvents(true);
+        setGithubEventsData({
+          ...githubEventsData,
+          error: null,
+          isLoading: true,
+        });
         const githubEvents = await getGithubEvents(GITHUB_USERNAME);
         if (!githubEvents || !githubEvents.data) {
           throw new Error();
         }
-        setIsLoadingGithubEvents(false);
-        setGithubEventsData(githubEvents.data);
+        setGithubEventsData({
+          ...githubEventsData,
+          data: githubEvents.data,
+          isLoading: false,
+        });
       } catch (err: any) {
-        setIsLoadingGithubEvents(false);
-        setGithubEventsError("Failed to load Github events");
+        setGithubEventsData({
+          ...githubEventsData,
+          error: "Failed to load Github events",
+          isLoading: false,
+        });
       }
     };
     fetchGithubEvents();
   }, []);
+
+  const getYearsOfCodingExperience = () => {
+    const startDate = new Date(2019, 10, 1);
+    const yearsOfCoding = calculateYearsOfCodingExperience(startDate);
+    return numberWords[yearsOfCoding];
+  };
 
   return (
     <div className="pt-12 ">
       <div className="md:grid md:grid-cols-5">
         <div className="md:col-span-3 md:pr-8">
           <h2 className={`${headingClassNames}`}>About Me</h2>
-          {/* // TODO: should calculate (current date - november 2019) */}
-          <p className="py-5 ">
-            Hey! I'm Edvin, a dependable web developer. I have been coding
-            professionally for over a year, and amateur for over four years. I
-            am always eager to learn new technologies and techniques. My primary
-            focus has been on front-end development, but I also have experience
-            with back-end technologies. Through the development of various
-            projects, I have found new ways to improve efficiency and
-            sustainability.
+          <p className="py-5">
+            Hey! I'm Edvin, a constantly learning web developer. I have been
+            coding for over {getYearsOfCodingExperience()} years, and it quickly
+            turned into one of my favorite things to do. I am always eager to
+            learn new technologies and techniques. My primary focus has been on
+            front-end development, but I also have experience with back-end
+            technologies. Through the development of various projects, I have
+            found new ways to improve efficiency and sustainability.
           </p>
         </div>
         <div className="md:col-span-2">
@@ -99,10 +131,10 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
       <div className="py-8 lg:py-32">
         <h3 className={`${headingClassNames} `}>Personal Dashboard</h3>
         <div className="border-l-[3px] border-red-500 mt-4 pl-2">
-          <h5 className={`text-xl font-semibold`}>GitHub</h5>
-          <p>Most Recent Actions</p>
+          <h5 className={`text-lg sm:text-xl font-semibold`}>GitHub</h5>
+          <p className="text-sm sm:text-base">Most Recent Actions</p>
         </div>
-        {isLoadingGithubEvents && (
+        {githubEventsData.isLoading && (
           <SpinnerCircularFixed
             size={50}
             thickness={100}
@@ -112,11 +144,13 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
             className="mt-4"
           />
         )}
-        {githubEventsError && (
-          <span className="text-red-500 block pt-4">{githubEventsError}</span>
+        {githubEventsData.error && (
+          <span className="text-red-500 block pt-4">
+            {githubEventsData.error}
+          </span>
         )}
-        {githubEventsData &&
-          githubEventsData.map((githubEvent, idx) => {
+        {githubEventsData.data &&
+          githubEventsData.data.map((githubEvent, idx) => {
             return <GithubEventCard githubEvent={githubEvent} key={idx} />;
           })}
       </div>
