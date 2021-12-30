@@ -51,26 +51,26 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
   useEffect(() => {
     const fetchGithubEvents = async () => {
       try {
-        setGithubEventsData({
-          ...githubEventsData,
+        setGithubEventsData((g) => ({
+          ...g,
           error: null,
           isLoading: true,
-        });
+        }));
         const githubEvents = await getGithubEvents(GITHUB_USERNAME);
         if (!githubEvents || !githubEvents.data) {
           throw new Error();
         }
-        setGithubEventsData({
-          ...githubEventsData,
+        setGithubEventsData((g) => ({
+          ...g,
           data: githubEvents.data,
           isLoading: false,
-        });
+        }));
       } catch (err: any) {
-        setGithubEventsData({
-          ...githubEventsData,
+        setGithubEventsData((g) => ({
+          ...g,
           error: "Failed to load Github events",
           isLoading: false,
-        });
+        }));
       }
     };
     fetchGithubEvents();
@@ -88,13 +88,13 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
         <div className="md:col-span-3 md:pr-8">
           <h2 className={`${headingClassNames}`}>About Me</h2>
           <p className="py-5">
-            Hey! I'm Edvin, a constantly learning web developer. I have been
-            coding for over {getYearsOfCodingExperience()} years, and it quickly
-            turned into one of my favorite things to do. I am always eager to
-            learn new technologies and techniques. My primary focus has been on
-            front-end development, but I also have experience with back-end
-            technologies. Through the development of various projects, I have
-            found new ways to improve efficiency and sustainability.
+            Hey! I&apos;m Edvin, a constantly learning web developer. I have
+            been coding for over {getYearsOfCodingExperience()} years, and it
+            quickly turned into one of my favorite things to do. I am always
+            eager to learn new technologies and techniques. My primary focus has
+            been on front-end development, but I also have experience with
+            back-end technologies. Through the development of various projects,
+            I have found new ways to improve efficiency and sustainability.
           </p>
         </div>
         <div className="md:col-span-2">
@@ -116,6 +116,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
               >
                 <Image
                   src={require("../public/question-mark.png")}
+                  alt="question mark"
                   width={120}
                   height={120}
                   className="rounded-full"

@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from "@heroicons/react/solid";
+import Image from "next/image";
 import React from "react";
 import { GithubEvent } from "../../typings/GithubEventResponse.interface";
-
 interface GithubEventCardProps {
   githubEvent: GithubEvent;
 }
@@ -27,11 +27,14 @@ export const GithubEventCard: React.FC<GithubEventCardProps> = ({
     <div className="bg-gray-50 my-4 p-4 rounded-xl max-w-xl shadow-md">
       <div className="flex items-start">
         {/* profile image */}
-        <img
-          src={githubEvent.actor.avatar_url}
-          className="w-10 h-10 rounded-full"
-          alt={`${githubEvent.actor.login} profile`}
-        />
+        <div className="relative w-10 h-10">
+          <Image
+            src={githubEvent.actor.avatar_url}
+            alt={`${githubEvent.actor.login} profile`}
+            layout="fill"
+            className="rounded-full"
+          />
+        </div>
         <div className="pl-3">
           {/* account name */}
           <div className="font-semibold text-sm sm:text-base">

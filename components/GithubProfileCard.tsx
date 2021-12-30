@@ -4,6 +4,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/outline";
 import { CodeIcon } from "@heroicons/react/solid";
+import Image from "next/image";
 import React, { Fragment } from "react";
 import { flexItemsCenter, hoverScaleClassNames } from "../styles/utilStyles";
 import { GithubProfileWithContributions } from "../utils/network-requests/getGithubProfile";
@@ -26,11 +27,14 @@ export const GithubProfileCard: React.FC<GithubProfileCardProps> = ({
           className={`bg-red-50 rounded-md my-5 p-5 ${hoverScaleClassNames} overflow-hidden shadow-md`}
         >
           <div className={`${flexItemsCenter}`}>
-            <img
-              src={githubProfile.avatar_url}
-              alt={githubProfile.login}
-              className="w-[120px] h-[120px] rounded-full ring-2 ring-red-500"
-            />
+            <div className="relative w-[120px] h-[120px] rounded-full ring-2 ring-red-500">
+              <Image
+                src={githubProfile.avatar_url}
+                alt={githubProfile.login}
+                layout="fill"
+                className="rounded-full"
+              />
+            </div>
             {/* profile info */}
             <div className="pl-6">
               <h4 className="font-semibold">{githubProfile?.login}</h4>
