@@ -1,7 +1,8 @@
+import { HTMLMotionProps, motion } from "framer-motion";
 import React from "react";
 import { SkillData } from "./skills-data";
 
-interface SkillCardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface SkillCardProps extends HTMLMotionProps<"div"> {
   skill: SkillData;
 }
 
@@ -23,11 +24,11 @@ export const SkillCard: React.FC<SkillCardProps> = ({
       >
         {skill.name.toUpperCase()}
       </div>
-      <div className={`p-2`} {...props}>
+      <motion.div className={`p-2`} {...props}>
         <div>
           <i className={`text-8xl ${skill.icon}`}></i>
         </div>
-      </div>
+      </motion.div>
     </a>
   );
 };
