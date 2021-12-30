@@ -8,7 +8,7 @@ export const SkillCardList: React.FC<SkillCardListProps> = ({}) => {
   const animationDurations: number[] = createRampingArray(
     skillsData.length,
     0.1,
-    1
+    0.7
   );
   return (
     <div className="flex flex-wrap gap-7 lg:gap-8">

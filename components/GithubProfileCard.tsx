@@ -4,6 +4,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/outline";
 import { CodeIcon } from "@heroicons/react/solid";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import React, { Fragment } from "react";
 import { flexItemsCenter, hoverScaleClassNames } from "../styles/utilStyles";
@@ -11,6 +12,7 @@ import { GithubProfileWithContributions } from "../utils/network-requests/getGit
 interface GithubProfileCardProps {
   githubProfile: GithubProfileWithContributions;
 }
+
 const iconClassNames = "w-5 h-5 mr-1 ml-[-3px]";
 
 export const GithubProfileCard: React.FC<GithubProfileCardProps> = ({
@@ -27,14 +29,18 @@ export const GithubProfileCard: React.FC<GithubProfileCardProps> = ({
           className={`bg-red-50 rounded-md my-5 p-5 ${hoverScaleClassNames} overflow-hidden shadow-md`}
         >
           <div className={`${flexItemsCenter}`}>
-            <div className="relative w-[120px] h-[120px] rounded-full ring-2 ring-red-500">
+            <motion.div
+              animate={{ scale: [0, 1.1, 1], opacity: [0, 1] }}
+              transition={{ duration: 0.8 }}
+              className="relative w-[120px] h-[120px] rounded-full ring-2 ring-red-500"
+            >
               <Image
                 src={githubProfile.avatar_url}
                 alt={githubProfile.login}
                 layout="fill"
                 className="rounded-full"
               />
-            </div>
+            </motion.div>
             {/* profile info */}
             <div className="pl-6">
               <h4 className="font-semibold">{githubProfile?.login}</h4>
