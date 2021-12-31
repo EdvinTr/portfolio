@@ -8,32 +8,12 @@ export interface Project {
   tags: string[];
 }
 
-//"On a rainy spring evening I was browsing through Netflix trying to figure out what would be worth watching. With the word 'worth', I as many others heavily factor in the IMDb rating in this evaluation process. I found myself constantly checking the titles against IMDb, and yes, it was getting tiresome. At that point I looked for some tools to make this process faster, but sadly I couldn't find what I was looking for. That's when I got the thought that maybe I could build it myself, and so Scoreflicks was born. Through web-scraping and calling external APIs I was able to populate my own database with information regarding each title found on Netflix. This information is then accessed through a REST API which powers both the web version of Scoreflicks as well as the native version.",
-
-/* (
-  <span>
-    On a rainy spring evening I was browsing through Netflix trying to
-    figure out what would be worth watching. With the word 'worth', I as
-    many others heavily factor in the IMDb rating in this evaluation
-    process. I found myself constantly checking the titles against IMDb, and
-    yes, it was getting tiresome. At that point I looked for some tools to
-    make this process faster, but sadly I couldn't find what I was looking
-    for. That's when I got the thought that maybe I could build it myself,
-    and so Scoreflicks was born.
-    <br />
-    Through web-scraping and calling external APIs I was able to populate my
-    own database with information regarding each title found on Netflix.
-    This information is then accessed through a REST API which powers both
-    the web version of Scoreflicks as well as the native version.
-  </span>
-), */
 const projects: Project[] = [
   {
     title: "Scoreflicks",
     shortDescription: "IMDb ratings for Netflix movies and TV shows!",
     longDescription: `On a rainy spring evening I was browsing through Netflix trying to figure out what would be worth watching. With the word 'worth', I as many others heavily factor in the IMDb rating in this evaluation process. I found myself constantly checking the titles against IMDb, and yes, it was getting tiresome. At that point I looked for some tools to make this process faster, but sadly I couldn't find what I was looking for. That's when I got the thought that maybe I could build it myself, and so Scoreflicks was born. 
     Through web-scraping and calling external APIs I was able to populate my own database with information regarding each title found on Netflix. This information is then accessed through a REST API which powers both the web version of Scoreflicks as well as the native version.`,
-
     imagePath: require("../../public/img/scoreflicks.png"),
     demoURL: "https://scoreflicks.com",
     tags: [
