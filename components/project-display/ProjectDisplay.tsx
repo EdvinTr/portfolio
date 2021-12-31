@@ -9,20 +9,6 @@ interface ProjectDisplayProps {
   project: Project;
 }
 
-// image blur
-{
-  /* <Image
- className="image"
- src={image.src}
- alt={image.alt}
- layout="fill"
- objectFit="cover"
- objectPosition="top center"
- placeholder="blur"
- blurDataURL="/images/blur.jpg"
-/> */
-}
-
 export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
   const {
     title,
@@ -82,7 +68,6 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
           )}
         </div>
       </div>
-      {/* safari looking header */}
       <Link href={demoURL}>
         <a
           rel="noopener noreferrer"
@@ -92,6 +77,7 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
           <div
             className={`hover:scale-[1.03] transition-all duration-200 mt-8 mb-4`}
           >
+            {/* safari looking header */}
             <div className="bg-gray-200 p-2">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -99,7 +85,6 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
               </div>
             </div>
-            {/*  <Skeleton className="h-96" /> */}
             <motion.div
               animate={{ opacity: [0, 1] }}
               transition={{ duration: 0.8, ease: "easeIn" }}

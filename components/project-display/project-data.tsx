@@ -23,6 +23,7 @@ const projects: Project[] = [
       "Node.JS",
       "Express",
       "PostgreSQL",
+      "sequelize",
       "Puppeteer",
     ],
   },
