@@ -42,11 +42,11 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
           <h3 className="text-xl font-semibold">{title}</h3>
           <p>{shortDescription}</p>
           {/* technology tags */}
-          <div className="space-x-3">
+          <div className="">
             {tags.map((tag, idx) => (
               <div
                 key={idx}
-                className="text-xs bg-red-100 font-semibold inline-block px-1 uppercase"
+                className="mr-3 text-xs bg-red-100 font-semibold inline-block px-1 uppercase"
               >
                 {tag}
               </div>
@@ -117,7 +117,7 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
           </div>
         </a>
       </Link>
-      <p>{longDescription}</p>
+      <p className="whitespace-pre-line">{longDescription}</p>
     </Fragment>
   );
 };
