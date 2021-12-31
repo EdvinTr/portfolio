@@ -2,7 +2,7 @@ export const createRampingArray = (
   size: number,
   startingValue: number,
   cap: number
-) => {
+): number[] => {
   const arr: number[] = [];
   for (let i = 0; i < size; i++) {
     const previousValue = arr[i - 1] || 0;
