@@ -15,10 +15,10 @@ export const GithubEventCard: React.FC<GithubEventCardProps> = ({
         return <span className="text-purple-700">Push</span>;
 
       case "CreateEvent":
-        return <span className="text-green-600">Create</span>;
+        return <span className="text-green-700">Create</span>;
 
       case "IssuesEvent":
-        return <span className="text-orange-400">Issue</span>;
+        return <span className="text-orange-700">Issue</span>;
       default:
         return <span>{type}</span>;
     }
@@ -54,7 +54,7 @@ export const GithubEventCard: React.FC<GithubEventCardProps> = ({
           href={`https://github.com/${githubEvent.repo.name}`}
           rel="noopener noreferrer"
           target="_blank"
-          className="text-blue-500 hover:text-blue-600"
+          className="text-blue-600 hover:text-blue-700"
         >
           {githubEvent.repo.name}
         </a>

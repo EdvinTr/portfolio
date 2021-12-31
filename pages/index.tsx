@@ -129,7 +129,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
       <div className="py-8 lg:py-32">
         <h3 className={`${headingClassNames} `}>Personal Dashboard</h3>
         <div className="border-l-[3px] border-red-500 mt-4 pl-2">
-          <h5 className={`text-lg sm:text-xl font-semibold`}>GitHub</h5>
+          <h4 className={`text-lg sm:text-xl font-semibold`}>GitHub</h4>
           <p className="text-sm sm:text-base">Most Recent Actions</p>
         </div>
         {githubEventsData.isLoading && (
