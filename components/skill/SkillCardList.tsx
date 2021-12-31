@@ -15,6 +15,7 @@ export const SkillCardList: React.FC<SkillCardListProps> = ({}) => {
       {skillsData.map((skill, idx) => {
         return (
           <SkillCard
+            data-cy="skill-card"
             skill={skill}
             key={idx}
             animate={{ opacity: [0, 1] }}

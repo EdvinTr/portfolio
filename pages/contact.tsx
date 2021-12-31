@@ -4,7 +4,7 @@ import { MyContainer } from "../components/MyContainer";
 const ContactPage: NextPage = () => {
   return (
     <MyContainer className="py-4">
-      <div>Contact me here</div>
+      <h2>Contact Me</h2>
     </MyContainer>
   );
 };
