@@ -90,7 +90,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
             into one of my favorite things to do. My main focus has been on
             front-end development, but through various projects I have acquired
             experience with back-end technologies as well. I am always eager to
-            learn new technologies and techniques that will add to skill set.
+            learn new technologies and techniques that will add to my skill set.
           </p>
         </div>
         <div className="md:col-span-2">
