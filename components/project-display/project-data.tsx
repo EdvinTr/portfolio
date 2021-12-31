@@ -30,7 +30,8 @@ const projects: Project[] = [
     title: "Willys Plus Notifier",
     shortDescription:
       "A way to receive email notifications about products from user selected categories for Willys stores",
-    longDescription: ``,
+    longDescription: `Willys has hundreds of stores across Sweden. To become a premium member, you would opt in to Willys Plus, which is free of charge. Willys Plus comes with some perks;most notably, Plus members receive discounts on certain products. These products change every now and then, usually every Monday.
+    The problem here is that I personally am not interested in every single product which has a discount, and I am mostly interested in a select few categories. This is where Willys Plus Notifier comes in. It allows a user to search for a Willys store queried by city, then select categories and receive daily email notifications with information regarding products relating to the selected categories.`,
     imagePath: require("../../public/img/willys-plus-notifier-screenshot.png"),
     demoURL: "https://willys-plus-notifier.netlify.app",
     tags: [
@@ -44,6 +45,7 @@ const projects: Project[] = [
       "PostgreSQL",
       "Passport",
       "TypeORM",
+      "bcrypt",
       "Nodemailer",
       "Google APIS",
     ],
