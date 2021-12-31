@@ -1,3 +1,8 @@
+export interface NativeInformation {
+  iconPath: string;
+  href: string;
+}
+
 export interface Project {
   title: string;
   shortDescription: string;
@@ -6,6 +11,8 @@ export interface Project {
   demoURL: string;
   codeURL?: string;
   tags: string[];
+  iosData?: NativeInformation;
+  playStoreData?: NativeInformation;
 }
 
 const projects: Project[] = [
@@ -16,6 +23,14 @@ const projects: Project[] = [
     Through web-scraping and calling external APIs, I was able to populate my own database with information regarding each title found on Netflix. This information is then accessed through a REST API which powers both the web version of Scoreflicks as well as the native version.`,
     imagePath: require("../../public/img/scoreflicks.png"),
     demoURL: "https://scoreflicks.com",
+    iosData: {
+      href: "https://apps.apple.com/se/app/scoreflicks/id1589486945?l=en",
+      iconPath: require("../../public/icons/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg"),
+    },
+    playStoreData: {
+      iconPath: require("../../public/icons/google-play-badge.png"),
+      href: "https://play.google.com/store/apps/details?id=scoreflicks_two.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1",
+    },
     tags: [
       "Vue 3",
       "TypeScript",

@@ -18,6 +18,8 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
     demoURL,
     codeURL,
     tags,
+    iosData,
+    playStoreData,
   } = project;
   return (
     <Fragment>
@@ -40,8 +42,8 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
           </div>
         </div>
 
-        {/* demo and code links */}
         <div className="flex items-center space-x-2 pt-6 md:pt-0">
+          {/* link to demo */}
           <Link href={demoURL}>
             <a
               rel="noopener noreferrer"
@@ -53,6 +55,7 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
               <span>Demo</span>
             </a>
           </Link>
+          {/* link to source code */}
           {codeURL && (
             <Link href={codeURL}>
               <a
@@ -68,6 +71,7 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
           )}
         </div>
       </div>
+      {/* link to project demo */}
       <Link href={demoURL}>
         <a
           rel="noopener noreferrer"
@@ -85,6 +89,7 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
               </div>
             </div>
+            {/* project screenshot */}
             <motion.div
               animate={{ opacity: [0, 1] }}
               transition={{ duration: 0.8, ease: "easeIn" }}
@@ -103,6 +108,38 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
         </a>
       </Link>
       <p className="whitespace-pre-line">{longDescription}</p>
+      {/* ios and play store links */}
+      {iosData || playStoreData ? (
+        <div className="flex items-center pt-2">
+          {iosData && (
+            <Link href={iosData.href}>
+              <a target="_blank" rel="noopener noreferrer">
+                <Image
+                  src={iosData.iconPath}
+                  width={120}
+                  height={40}
+                  objectFit="contain"
+                  alt="Get on iOS App Store"
+                />
+              </a>
+            </Link>
+          )}
+          {playStoreData && (
+            <Link href={playStoreData.href}>
+              <a target="_blank" rel="noopener noreferrer">
+                <Image
+                  src={playStoreData.iconPath}
+                  width={150}
+                  height={65}
+                  objectFit="contain"
+                  alt="Get on Google Play Store"
+                  className="w-10"
+                />
+              </a>
+            </Link>
+          )}
+        </div>
+      ) : null}
     </Fragment>
   );
 };
