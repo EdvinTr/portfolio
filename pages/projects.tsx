@@ -7,9 +7,14 @@ const ProjectsPage: NextPage = () => {
   return (
     <div className="pt-12">
       <h2 className={`${headingClassNames}`}>Projects</h2>
-      <div className="py-6">
+      <div>
         {projectsData.map((project, idx) => (
-          <ProjectDisplay key={idx} project={project} />
+          <div
+            key={idx}
+            className="py-5 border-b-[3px] border-red-100 border-dashed"
+          >
+            <ProjectDisplay project={project} />
+          </div>
         ))}
       </div>
     </div>

@@ -102,7 +102,7 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
             {/*  <Skeleton className="h-96" /> */}
             <motion.div
               animate={{ opacity: [0, 1] }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, ease: "easeIn" }}
             >
               <Image
                 src={imagePath}
@@ -115,9 +115,9 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
               />
             </motion.div>
           </div>
-          <p>{longDescription}</p>
         </a>
       </Link>
+      <p>{longDescription}</p>
     </Fragment>
   );
 };
