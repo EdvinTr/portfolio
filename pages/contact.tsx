@@ -1,6 +1,8 @@
+import memoryCache from "memory-cache";
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import { ContactForm } from "../components/ContactForm";
+import { MEMORY_CACHE_KEY, timeMilliseconds } from "../constants";
 import { flexItemsCenter, headingClassNames } from "../styles/utilStyles";
 import { fetchDiscordUserById } from "../utils/network-requests/fetchDiscordUser";
 import { getGithubProfileById } from "../utils/network-requests/getGithubProfile";
@@ -89,6 +91,14 @@ const ContactPage: NextPage<ContactPageProps> = ({
 };
 
 export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
+  const value: ContactPageProps | undefined = memoryCache.get(
+    MEMORY_CACHE_KEY.CONTACT_INFO
+  );
+  if (value) {
+    return {
+      props: { ...value },
+    };
+  }
   const contactInfo: ContactPageProps = {};
   const { GITHUB_USER_ID, DISCORD_USER_ID } = process.env;
   try {
@@ -109,6 +119,11 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
         link: `https://discord.com/users/${discordUsername}`,
       };
     }
+    memoryCache.put(
+      MEMORY_CACHE_KEY.CONTACT_INFO,
+      contactInfo,
+      timeMilliseconds.FIVE_MINUTES
+    );
     return {
       props: {
         ...contactInfo,

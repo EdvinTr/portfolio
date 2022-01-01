@@ -6,7 +6,11 @@ import { SpinnerCircularFixed } from "spinners-react";
 import { GithubEventCard } from "../components/github-events/GithubEventCard";
 import { GithubProfileCard } from "../components/GithubProfileCard";
 import { SkillCardList } from "../components/skill/SkillCardList";
-import { GITHUB_USERNAME, MEMORY_CACHE_KEY } from "../constants";
+import {
+  GITHUB_USERNAME,
+  MEMORY_CACHE_KEY,
+  timeMilliseconds,
+} from "../constants";
 import { headingClassNames, hoverScaleClassNames } from "../styles/utilStyles";
 import { GithubEvent } from "../typings/GithubEventResponse.interface";
 import { calculateYearsOfCodingExperience } from "../utils/calculateYearsOfCodingExperience";
@@ -172,8 +176,11 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
       ...profile?.data,
       contributions,
     };
-    const FIVE_MINUTES = 1000 * 60 * 5;
-    memoryCache.put(MEMORY_CACHE_KEY.GITHUB_PROFILE, githubData, FIVE_MINUTES);
+    memoryCache.put(
+      MEMORY_CACHE_KEY.GITHUB_PROFILE,
+      githubData,
+      timeMilliseconds.FIVE_MINUTES
+    );
     return {
       props: { githubProfile: githubData },
     };
