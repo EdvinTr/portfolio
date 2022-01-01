@@ -43,7 +43,7 @@ const GITHUB_API_URL = "https://api.github.com";
 const githubAPI = axios.create({
   baseURL: GITHUB_API_URL,
 });
-export const getGithubProfileByUsername = async (username: string) => {
+/* export const getGithubProfileByUsername = async (username: string) => {
   try {
     const url = `/users/${username}`;
     const response = await githubAPI.get<GetGithubProfileResponse>(url);
@@ -51,7 +51,7 @@ export const getGithubProfileByUsername = async (username: string) => {
   } catch {
     return null;
   }
-};
+}; */
 export const getGithubProfileById = async (githubId: string) => {
   try {
     const url = `/user/${githubId}`;

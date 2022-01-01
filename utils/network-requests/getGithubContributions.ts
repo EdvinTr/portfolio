@@ -9,6 +9,9 @@ export const getGithubContributions = async (
   const $ = (selector: any) => dom.window.document.querySelector(selector);
 
   const contribSelector = "div.js-yearly-contributions > div:nth-child(1) > h2"; // select h2 containing the number of contributions
+  if (!contribSelector) {
+    return "N/A";
+  }
   const contributions: string = $(contribSelector)
     .textContent.trim()
     .split("\n")[0];
