@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
+    "@tailwindcss/forms": "^0.4.0",
     "axios": "^0.24.0",
     "framer-motion": "^5.5.5",
     "jsdom": "^19.0.0",

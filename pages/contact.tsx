@@ -84,7 +84,7 @@ const ContactPage: NextPage<ContactPageProps> = ({
             </div>
           </div>
         )}
-        <ContactForm />
+        <ContactForm className="pt-8" />
       </div>
     </div>
   );
