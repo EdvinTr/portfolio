@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { FormEvent, useState } from "react";
+import { toast, ToastContainer } from "react-toast";
 import { SpinnerCircularFixed } from "spinners-react";
 const inputClassNames =
   "w-full rounded-md border border-gray-200 focus:border-red-500 focus:ring-red-500 placeholder:text-gray-400";
@@ -27,6 +28,15 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   const [isSending, setIsSending] = useState(false);
   const currentMessageLength = formData.message.length;
 
+  const showSuccessToast = () =>
+    toast.success("Message sent successfully!", {
+      backgroundColor: "#22c55e",
+    });
+  const showErrorToast = () =>
+    toast.error("Something went wrong. Please try again.", {
+      backgroundColor: "#ef4444",
+    });
+
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
@@ -52,11 +62,16 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         data
       );
       if (emailResponse.status === 200) {
+        showSuccessToast();
         resetForm();
       }
     } catch {
+      showErrorToast();
     } finally {
       setIsSending(false);
+      setTimeout(() => {
+        toast.hideAll();
+      }, 5000);
     }
   };
   const resetForm = () => {
@@ -67,6 +82,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       message: "",
     });
   };
+
   return (
     <div {...props}>
       {/* name and email input */}
@@ -86,6 +102,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
+              value={formData.name}
             />
           </div>
           {/* email input */}
@@ -102,6 +119,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
+              value={formData.email}
             />
           </div>
         </div>
@@ -120,6 +138,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               onChange={(e) =>
                 setFormData({ ...formData, subject: e.target.value })
               }
+              value={formData.subject}
             />
           </div>
         </div>
@@ -139,6 +158,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               onChange={(e) =>
                 setFormData({ ...formData, message: e.target.value })
               }
+              value={formData.message}
             ></textarea>
           </div>
         </div>
@@ -171,6 +191,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           )}
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };
