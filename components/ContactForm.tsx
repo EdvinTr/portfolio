@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { FormEvent, useState } from "react";
-
+import { SpinnerCircularFixed } from "spinners-react";
 const inputClassNames =
   "w-full rounded-md border border-gray-200 focus:border-red-500 focus:ring-red-500 placeholder:text-gray-400";
 const MAX_MESSAGE_LENGTH = 500;
@@ -24,6 +24,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     subject: "",
     message: "",
   });
+  const [isSending, setIsSending] = useState(false);
   const currentMessageLength = formData.message.length;
 
   const onFormSubmit = async (e: FormEvent) => {
@@ -33,6 +34,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     const emailjsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
     const { name, email, subject, message } = formData;
     try {
+      setIsSending(true);
       const templateParams = {
         from_name: name,
         from_email: email,
@@ -52,7 +54,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       if (emailResponse.status === 200) {
         resetForm();
       }
-    } catch {}
+    } catch {
+    } finally {
+      setIsSending(false);
+    }
   };
   const resetForm = () => {
     setFormData({
@@ -152,7 +157,18 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           type="submit"
           className="bg-red-500 w-full py-2 text-white rounded-md"
         >
-          Send
+          {isSending ? (
+            <SpinnerCircularFixed
+              size={30}
+              thickness={80}
+              speed={300}
+              color="rgba(255, 255, 255,1)"
+              secondaryColor="rgba(172, 57, 57, 0)"
+              className="inline"
+            />
+          ) : (
+            "Send"
+          )}
         </button>
       </form>
     </div>
