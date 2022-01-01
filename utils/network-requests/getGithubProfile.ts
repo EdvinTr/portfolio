@@ -38,8 +38,14 @@ export interface GithubProfileWithContributions
   extends GetGithubProfileResponse {
   contributions: number | string;
 }
-export const getGithubProfile = async (username: string) => {
+export const getGithubProfileByUsername = async (username: string) => {
   const url = `https://api.github.com/users/${username}`;
+  const response = await axios.get<GetGithubProfileResponse>(url);
+  return response;
+};
+
+export const getGithubProfileById = async (githubId: string) => {
+  const url = `https://api.github.com/user/${githubId}`;
   const response = await axios.get<GetGithubProfileResponse>(url);
   return response;
 };

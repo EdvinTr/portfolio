@@ -13,7 +13,7 @@ import { calculateYearsOfCodingExperience } from "../utils/calculateYearsOfCodin
 import { getGithubContributions } from "../utils/network-requests/getGithubContributions";
 import { getGithubEvents } from "../utils/network-requests/getGithubEvents";
 import {
-  getGithubProfile,
+  getGithubProfileByUsername,
   GithubProfileWithContributions,
 } from "../utils/network-requests/getGithubProfile";
 
@@ -163,7 +163,7 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
   try {
     const [contributions, profile] = await Promise.all([
       getGithubContributions(GITHUB_USERNAME),
-      getGithubProfile(GITHUB_USERNAME),
+      getGithubProfileByUsername(GITHUB_USERNAME),
     ]);
     if (!contributions || !profile) {
       throw new Error();
