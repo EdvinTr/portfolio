@@ -1,26 +1,71 @@
-import React, { useState } from "react";
-
-interface ContactFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+import axios from "axios";
+import React, { FormEvent, useState } from "react";
 
 const inputClassNames =
   "w-full rounded-md border border-gray-200 focus:border-red-500 focus:ring-red-500 placeholder:text-gray-400";
-
 const MAX_MESSAGE_LENGTH = 500;
+
+interface FormMessageBody {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+interface ContactFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+
 export const ContactForm: React.FC<ContactFormProps> = ({
   children: _,
   ...props
 }) => {
-  const [messageBody, setMessageBody] = useState({
+  const [messageBody, setMessageBody] = useState<FormMessageBody>({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
   const currentMessageLength = messageBody.message.length;
+
+  const onFormSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const emailjsUserId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
+    const emailjsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const { name, email, subject, message } = messageBody;
+    try {
+      const templateParams = {
+        from_name: name,
+        from_email: email,
+        from_subject: subject,
+        from_message: message,
+      };
+      const data = {
+        service_id: emailjsServiceId,
+        template_id: emailjsTemplateId,
+        user_id: emailjsUserId,
+        template_params: templateParams,
+      };
+      const emailResponse = await axios.post(
+        "https://api.emailjs.com/api/v1.0/email/send",
+        data
+      );
+      if (emailResponse.status === 200) {
+        resetForm();
+      }
+    } catch {}
+  };
+  const resetForm = () => {
+    setMessageBody({
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    });
+  };
   return (
     <div {...props}>
       {/* name and email input */}
-      <form className="">
+      <form onSubmit={onFormSubmit}>
         <div className="flex space-x-4">
           {/* name input */}
           <div className="w-full">
@@ -105,7 +150,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         {/* send button */}
         <button
           type="submit"
-          className="bg-red-500 w-full py-2  text-white rounded-md"
+          className="bg-red-500 w-full py-2 text-white rounded-md"
         >
           Send
         </button>

@@ -11,6 +11,7 @@
     "cypress:build:test": "yarn build && start-server-and-test start http://localhost:3000 cypress"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.3.1",
     "@heroicons/react": "^1.0.5",
     "@tailwindcss/forms": "^0.4.0",
     "axios": "^0.24.0",
