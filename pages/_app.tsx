@@ -9,13 +9,13 @@ import { Navbar } from "../components/Navbar";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    const start = () => {
-      setLoading(true);
+    const start = (url: string) => {
+      setIsLoading(true);
     };
-    const end = () => {
-      setLoading(false);
+    const end = (url: string) => {
+      setIsLoading(false);
     };
     Router.events.on("routeChangeStart", start);
     Router.events.on("routeChangeComplete", end);
@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <header>
         <Navbar />
       </header>
-      {loading ? (
+      {isLoading ? (
         <motion.div
           initial={{ opacity: 1 }}
           transition={{ duration: 0.5 }}

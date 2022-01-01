@@ -43,7 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
   return (
     <Fragment>
       <nav className="flex items-center justify-between">
-        <Link href="/" passHref>
+        <Link href="/">
           <a>
             <h1 className="font-extrabold text-gray-800 text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-3xl">
               Edvin Trönnberg
