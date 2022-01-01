@@ -7,11 +7,11 @@
     "start": "next start",
     "lint": "next lint",
     "cypress": "cypress open",
-    "test": "yarn build && start-server-and-test start http://localhost:3000 cypress"
+    "cypress-test": "start-server-and-test start http://localhost:3000 cypress",
+    "cypress:build:test": "yarn build && start-server-and-test start http://localhost:3000 cypress"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
-    "@types/jsdom": "^16.2.14",
     "axios": "^0.24.0",
     "framer-motion": "^5.5.5",
     "jsdom": "^19.0.0",
@@ -23,6 +23,7 @@
     "tailwindcss-classnames": "^3.0.1"
   },
   "devDependencies": {
+    "@types/jsdom": "^16.2.14",
     "@types/memory-cache": "^0.2.1",
     "@types/node": "17.0.5",
     "@types/react": "17.0.38",

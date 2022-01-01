@@ -69,13 +69,13 @@ const projects: Project[] = [
   {
     title: "Dashback",
     shortDescription:
-      "A reimagined version of the swedish internet forum Flashback!",
+      "A reimagined version of the Swedish internet forum Flashback!",
     longDescription: `Flashback has seen better days and I thought it was time for a little facelift, enter Dashback, a reimagined version of Flashback. It's a simple clone where I tried to keep the original dataflow and functionality the same, but with an updated look and feel. It was a fun project to work on as I had to be creative with SQL queries in a way to mimic the original Flashback.`,
     imagePath: require("../../public/img/dashback-screenshot.png"),
     demoURL: "https://elegant-allen-c3edd1.netlify.app",
     tags: [
       "React",
-      "Apollo Server",
+      "Apollo",
       "GraphQL",
       "TypeScript",
       "Tailwind",
@@ -85,13 +85,14 @@ const projects: Project[] = [
       "Passport",
       "TypeORM",
       "argon2",
+      "TypeGraphQL",
     ],
   },
   {
     title: "Quick Quiz",
     shortDescription: "A simple but fun quiz game!",
     longDescription: `On the surface, a quiz game is very simple, but there are actually quite a few things going on. Keeping track of the state of the game, the users selected answers, coloring correct and incorrect answers, and the ability to restart the game, to name a few. Overall, it was a perfectly sized project for learning the basics of React.
-    Using TypeScript (TS) in a small project can be overkill as it simply adds boilerplate code, but the developer experience of using TS definitely makes it worth it.`,
+    Using TypeScript (TS) in a small project can be overkill as it usually requires some boilerplate code, but the amazing developer experience of using TS is definitely worth it.`,
     imagePath: require("../../public/img/quick-quiz-screenshot.png"),
     demoURL: "https://quickest-quiz.netlify.app",
     tags: ["React", "TypeScript", "Tailwind", "Framer Motion"],

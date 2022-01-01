@@ -1,30 +1,41 @@
+import { motion } from "framer-motion";
 import React from "react";
-import { createRampingArray } from "../../utils/createRampingArray";
 import { SkillCard } from "./SkillCard";
 import { skillsData } from "./skills-data";
 interface SkillCardListProps {}
 
 export const SkillCardList: React.FC<SkillCardListProps> = ({}) => {
-  const animationDurations: number[] = createRampingArray(
-    skillsData.length,
-    0.1,
-    0.7
-  );
+  // stagger children animation
+  const containerVariant = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  };
+  const variantItem = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+  };
   return (
-    <div className="flex flex-wrap gap-7 lg:gap-8">
+    <motion.div
+      className="flex flex-wrap gap-7 lg:gap-8"
+      variants={containerVariant}
+      initial="hidden"
+      animate="show"
+    >
       {skillsData.map((skill, idx) => {
         return (
           <SkillCard
             data-cy="skill-card"
             skill={skill}
             key={idx}
-            animate={{ opacity: [0, 1] }}
-            transition={{
-              duration: animationDurations[idx],
-            }}
+            variants={variantItem}
           />
         );
       })}
-    </div>
+    </motion.div>
   );
 };

@@ -27,7 +27,9 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
       <div className="md:flex md:justify-between">
         {/* project heading */}
         <div>
-          <h3 className="text-xl font-semibold">{title}</h3>
+          <h3 data-cy="project-title" className="text-xl font-semibold">
+            {title}
+          </h3>
           <p>{shortDescription}</p>
           {/* technology tags */}
           <div className="">

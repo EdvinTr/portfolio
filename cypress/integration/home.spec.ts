@@ -14,12 +14,12 @@ describe("Home Page", () => {
     it("should navigate to the projects page", () => {
       cy.get('a[href*="projects"]').click();
       cy.url().should("include", "/projects");
-      cy.get("h2").contains("Projects");
+      cy.get("[data-cy=page-heading]").contains("Projects");
     });
     it("should navigate to the contact page", () => {
       cy.get('a[href*="contact"]').click();
       cy.url().should("include", "/contact");
-      cy.get("h2").contains("Contact Me");
+      cy.get("[data-cy=page-heading]").contains("Contact Me");
     });
   });
 });
