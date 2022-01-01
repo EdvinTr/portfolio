@@ -52,7 +52,6 @@ export const getGithubProfileByUsername = async (username: string) => {
     return null;
   }
 };
-
 export const getGithubProfileById = async (githubId: string) => {
   try {
     const url = `/user/${githubId}`;
