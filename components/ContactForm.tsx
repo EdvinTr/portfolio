@@ -167,7 +167,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           className={`py-2 text-sm  ${
             currentMessageLength === MAX_MESSAGE_LENGTH
               ? "text-red-500"
-              : "text-gray-400"
+              : "text-gray-500"
           }`}
         >
           {currentMessageLength} / {MAX_MESSAGE_LENGTH} characters
@@ -175,7 +175,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         {/* send button */}
         <button
           type="submit"
-          className="bg-red-500 w-full py-2 text-white rounded-md"
+          className="bg-red-500 hover:bg-red-600 transition-colors duration-150 w-full py-2 text-white rounded-md"
         >
           {isSending ? (
             <SpinnerCircularFixed
