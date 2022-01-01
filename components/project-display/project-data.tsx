@@ -92,7 +92,7 @@ const projects: Project[] = [
     title: "Quick Quiz",
     shortDescription: "A simple but fun quiz game!",
     longDescription: `On the surface, a quiz game is very simple, but there are actually quite a few things going on. Keeping track of the state of the game, the users selected answers, coloring correct and incorrect answers, and the ability to restart the game, to name a few. Overall, it was a perfectly sized project for learning the basics of React.
-    Using TypeScript (TS) in a small project can be overkill as it usually requires some boilerplate code, but the amazing developer experience of using TS is definitely worth it.`,
+    Using TypeScript (TS) in a small project can be overkill as it usually requires some boilerplate code, but the amazing developer experience of using TS is definitely outweighs the negatives.`,
     imagePath: require("../../public/img/quick-quiz-screenshot.png"),
     demoURL: "https://quickest-quiz.netlify.app",
     tags: ["React", "TypeScript", "Tailwind", "Framer Motion"],
