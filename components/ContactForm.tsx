@@ -18,20 +18,20 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   children: _,
   ...props
 }) => {
-  const [messageBody, setMessageBody] = useState<FormMessageBody>({
+  const [formData, setFormData] = useState<FormMessageBody>({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
-  const currentMessageLength = messageBody.message.length;
+  const currentMessageLength = formData.message.length;
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
     const emailjsUserId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
     const emailjsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-    const { name, email, subject, message } = messageBody;
+    const { name, email, subject, message } = formData;
     try {
       const templateParams = {
         from_name: name,
@@ -55,7 +55,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     } catch {}
   };
   const resetForm = () => {
-    setMessageBody({
+    setFormData({
       name: "",
       email: "",
       subject: "",
@@ -79,7 +79,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               className={inputClassNames}
               required
               onChange={(e) =>
-                setMessageBody({ ...messageBody, name: e.target.value })
+                setFormData({ ...formData, name: e.target.value })
               }
             />
           </div>
@@ -95,7 +95,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               className={inputClassNames}
               required
               onChange={(e) =>
-                setMessageBody({ ...messageBody, email: e.target.value })
+                setFormData({ ...formData, email: e.target.value })
               }
             />
           </div>
@@ -113,7 +113,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               required
               autoComplete="off"
               onChange={(e) =>
-                setMessageBody({ ...messageBody, subject: e.target.value })
+                setFormData({ ...formData, subject: e.target.value })
               }
             />
           </div>
@@ -132,7 +132,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               rows={3}
               maxLength={MAX_MESSAGE_LENGTH}
               onChange={(e) =>
-                setMessageBody({ ...messageBody, message: e.target.value })
+                setFormData({ ...formData, message: e.target.value })
               }
             ></textarea>
           </div>
