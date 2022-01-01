@@ -1,5 +1,6 @@
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
+import { ContactForm } from "../components/ContactForm";
 import { flexItemsCenter, headingClassNames } from "../styles/utilStyles";
 import { fetchDiscordUserById } from "../utils/network-requests/fetchDiscordUser";
 import { getGithubProfileById } from "../utils/network-requests/getGithubProfile";
@@ -81,6 +82,7 @@ const ContactPage: NextPage<ContactPageProps> = ({
             </div>
           </div>
         )}
+        <ContactForm />
       </div>
     </div>
   );
