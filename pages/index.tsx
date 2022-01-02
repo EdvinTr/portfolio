@@ -94,12 +94,12 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
         <div className="md:col-span-3 md:pr-8">
           <h2 className={`${headingClassNames}`}>About Me</h2>
           <p className="py-5">
-            Hey! I&apos;m Edvin, a dependable web developer. I have been coding
-            for over {getYearsOfCodingExperience()} years, and it quickly turned
-            into one of my favorite things to do. My main focus has been on
-            front-end development, but through various projects I have acquired
-            experience with back-end technologies as well. I am always eager to
-            learn new technologies and techniques that will add to my skill set.
+            {`Hey! I'm Edvin, a dependable web developer. I have been coding
+              for over ${getYearsOfCodingExperience()} years, and it quickly turned
+              into one of my favorite things to do. My main focus has been on
+              front-end development, but through various projects I have acquired
+              experience with back-end technologies as well. I am always eager to
+              learn new technologies and techniques that will add to my skill set.`}
           </p>
         </div>
         <div className="md:col-span-2">
