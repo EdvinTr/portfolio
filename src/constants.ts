@@ -8,4 +8,6 @@ export const timeMilliseconds = {
   FIVE_MINUTES: 1000 * 60 * 5,
 };
 
+export const BASE_WEBSITE_NAME = "Edvin Trönnberg";
+
 export const GITHUB_USERNAME = "EdvinTr";

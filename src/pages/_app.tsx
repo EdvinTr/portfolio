@@ -6,7 +6,12 @@ import { useEffect, useState } from "react";
 import { SpinnerCircularFixed } from "spinners-react";
 import { MyContainer } from "../components/MyContainer";
 import { Navbar } from "../components/Navbar";
+import { BASE_WEBSITE_NAME } from "../constants";
 import "../styles/globals.css";
+
+const appImageUrl = "https://i.imgur.com/CSsJjUQ.png";
+const metaDescription =
+  "Edvin Trönnbergs portfolio website that includes projects, skills, contact information and more.";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,11 +34,25 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MyContainer className="py-8 text-gray-800">
       <Head>
-        <title>Edvin Trönnberg</title>
+        <title>{BASE_WEBSITE_NAME}</title>
+        <meta name="description" content={metaDescription} />
+        {/* facebook meta */}
+        <meta property="og:url" content="https://edvin-tronnberg.vercel.app/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={BASE_WEBSITE_NAME} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content={appImageUrl} />
+
+        {/* twitter meta */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="edvin-tronnberg.vercel.app" />
         <meta
-          name="description"
-          content="Edvin Trönnbergs portfolio website that includes projects, skills, contact information and more."
+          property="twitter:url"
+          content="https://edvin-tronnberg.vercel.app/"
         />
+        <meta name="twitter:title" content={BASE_WEBSITE_NAME} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content={appImageUrl} />
       </Head>
       <header>
         <Navbar />

@@ -1,8 +1,13 @@
 import { motion } from "framer-motion";
 import type { GetStaticProps, NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { ContactForm } from "../components/contact-form/ContactForm";
-import { MEMORY_CACHE_KEY, timeMilliseconds } from "../constants";
+import {
+  BASE_WEBSITE_NAME,
+  MEMORY_CACHE_KEY,
+  timeMilliseconds,
+} from "../constants";
 import { flexItemsCenter, headingClassNames } from "../styles/utilStyles";
 import {
   CachingOptions,
@@ -42,6 +47,9 @@ const ContactPage: NextPage<ContactPageProps> = ({
       animate={{ opacity: [0, 1] }}
       transition={{ duration: 0.5 }}
     >
+      <Head>
+        <title>Contact | {BASE_WEBSITE_NAME}</title>
+      </Head>
       <h2 data-cy="page-heading" className={`${headingClassNames}`}>
         Contact Me
       </h2>
