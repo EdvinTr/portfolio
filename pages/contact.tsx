@@ -6,6 +6,7 @@ import { MEMORY_CACHE_KEY, timeMilliseconds } from "../constants";
 import { flexItemsCenter, headingClassNames } from "../styles/utilStyles";
 import { fetchDiscordUserById } from "../utils/network-requests/fetchDiscordUser";
 import { GithubApiReader } from "../utils/network-requests/github/GithubApiReader";
+import { GetGithubProfileResponse } from "../utils/network-requests/github/types";
 interface ContactInfo {
   contactProvider: ContactType;
   username: string;
@@ -91,28 +92,40 @@ const ContactPage: NextPage<ContactPageProps> = ({
 };
 
 export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
-  const value: ContactPageProps | undefined = memoryCache.get(
+  const cachedContactData: ContactPageProps | undefined = memoryCache.get(
     MEMORY_CACHE_KEY.CONTACT_INFO
   );
-  if (value) {
+  if (cachedContactData) {
     return {
-      props: { ...value },
+      props: { ...cachedContactData },
     };
   }
+
   const contactInfo: ContactPageProps = {};
   const { GITHUB_USER_ID, DISCORD_USER_ID } = process.env;
+  const cachedGithubProfileData: GetGithubProfileResponse | undefined =
+    memoryCache.get(MEMORY_CACHE_KEY.GITHUB_PROFILE);
   try {
-    const response = await GithubApiReader.fetchGithubProfileByUserId(
-      GITHUB_USER_ID
-    );
-    const username = response?.data?.login;
-    if (username) {
+    if (!cachedGithubProfileData) {
+      const response = await GithubApiReader.fetchGithubProfileByUserId(
+        GITHUB_USER_ID
+      );
+      const username = response?.data?.login;
+      if (username) {
+        contactInfo.githubInfo = {
+          contactProvider: ContactType.GITHUB,
+          username: username,
+          link: `https://github.com/${username}`,
+        };
+      }
+    } else {
       contactInfo.githubInfo = {
         contactProvider: ContactType.GITHUB,
-        username: username,
-        link: `https://github.com/${username}`,
+        username: cachedGithubProfileData.login,
+        link: `https://github.com/${cachedGithubProfileData.login}`,
       };
     }
+
     const discordUsername = await fetchDiscordUserById(DISCORD_USER_ID);
     if (discordUsername) {
       contactInfo.discordInfo = {
