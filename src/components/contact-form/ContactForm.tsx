@@ -95,6 +95,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               Name
             </label>
             <input
+              data-testid="name-input"
               id="name"
               type="text"
               placeholder="Your Name"

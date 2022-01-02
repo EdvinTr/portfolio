@@ -1,5 +1,4 @@
-import { skillsData } from "../../components/skill/skills-data";
-
+import { skillsData } from "../../src/components/skill/skills-data";
 describe("Home Page", () => {
   beforeEach(() => {
     cy.visit("/");

@@ -1,5 +1,4 @@
-import projects from "../../components/project-display/project-data";
-
+import projects from "../../src/components/project-display/project-data";
 // TODO: fix webpack, cant handle png files
 describe("Projects Page", () => {
   beforeEach(() => {
