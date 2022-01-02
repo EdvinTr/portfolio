@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import React, { Fragment } from "react";
 import { flexItemsCenter, hoverScaleClassNames } from "../styles/utilStyles";
-import { GithubProfileWithContributions } from "../utils/network-requests/getGithubProfile";
+import { GithubProfileWithContributions } from "../utils/network-requests/github/types";
 interface GithubProfileCardProps {
   githubProfile: GithubProfileWithContributions;
 }

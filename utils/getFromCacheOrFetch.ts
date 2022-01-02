@@ -23,7 +23,6 @@ export async function getFromCacheOrFetch<T>(
       throw new Error();
     }
     if (cachingOptions.shouldCache) {
-      // should be cached
       memoryCache.put(memoryKey, fetchedData, cachingOptions.ttl);
       return {
         data: fetchedData,

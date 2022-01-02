@@ -51,7 +51,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
     error: null,
   });
   useEffect(() => {
-    const fetchGithubEvents = async () => {
+    const fetchGithubEvents = async (): Promise<void> => {
       try {
         setGithubEventsData((g) => ({
           ...g,
@@ -81,7 +81,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
     fetchGithubEvents();
   }, []);
 
-  const getYearsOfCodingExperience = () => {
+  const getYearsOfCodingExperience = (): string => {
     const startDate = new Date(2019, 10, 1);
     const yearsOfCoding = calculateYearsOfCodingExperience(startDate);
     return numberWords[yearsOfCoding];

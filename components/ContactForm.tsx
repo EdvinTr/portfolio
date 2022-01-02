@@ -28,16 +28,16 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   const [isSending, setIsSending] = useState(false);
   const currentMessageLength = formData.message.length;
 
-  const showSuccessToast = () =>
+  const showSuccessToast = (): void =>
     toast.success("Message sent successfully!", {
       backgroundColor: "#22c55e",
     });
-  const showErrorToast = () =>
+  const showErrorToast = (): void =>
     toast.error("Something went wrong. Please try again.", {
       backgroundColor: "#ef4444",
     });
 
-  const onFormSubmit = async (e: FormEvent) => {
+  const onFormSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
     const emailjsUserId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
@@ -74,7 +74,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       }, 5000);
     }
   };
-  const resetForm = () => {
+  const resetForm = (): void => {
     setFormData({
       name: "",
       email: "",

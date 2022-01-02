@@ -33,7 +33,7 @@ const routes = [
 export const Navbar: React.FC<NavbarProps> = ({}) => {
   const router = useRouter();
 
-  const isActivePath = (path: string) => {
+  const isActivePath = (path: string): boolean => {
     return router.pathname === path;
   };
   return (
