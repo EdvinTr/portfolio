@@ -108,7 +108,13 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
     fetchDiscordUserById.bind(this, DISCORD_USER_ID),
     cachingOptions
   );
-
+  if (discordInfo.data) {
+    contactInfo.discordInfo = {
+      contactProvider: ContactType.DISCORD,
+      username: discordInfo.data,
+      link: `https://discord.com/users/${discordInfo.data}`,
+    };
+  }
   const githubProfile = await getFromCacheOrFetch<GetGithubProfileResponse>(
     MEMORY_CACHE_KEY.GITHUB_PROFILE,
     GithubApiReader.fetchGithubProfileByUserId.bind(null, GITHUB_USER_ID),
@@ -119,14 +125,6 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
       contactProvider: ContactType.GITHUB,
       username: githubProfile.data.login,
       link: `https://github.com/${githubProfile.data.login}`,
-    };
-  }
-
-  if (discordInfo.data) {
-    contactInfo.discordInfo = {
-      contactProvider: ContactType.DISCORD,
-      username: discordInfo.data,
-      link: `https://discord.com/users/${discordInfo.data}`,
     };
   }
   return {

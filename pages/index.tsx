@@ -14,9 +14,13 @@ import {
 import { headingClassNames, hoverScaleClassNames } from "../styles/utilStyles";
 import { GithubEvent } from "../typings/GithubEventResponse.interface";
 import { calculateYearsOfCodingExperience } from "../utils/calculateYearsOfCodingExperience";
+import { getFromCacheOrFetch } from "../utils/getFromCacheOrFetch";
 import { GithubApiReader } from "../utils/network-requests/github/GithubApiReader";
 import { scrapeGithubContributions } from "../utils/network-requests/github/scrapeGithubContributions";
-import { GithubProfileWithContributions } from "../utils/network-requests/github/types";
+import {
+  GetGithubProfileResponse,
+  GithubProfileWithContributions,
+} from "../utils/network-requests/github/types";
 
 const numberWords = [
   "zero",
@@ -166,22 +170,22 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
     return { props: { githubProfile: value } };
   }
   try {
-    const [contributions, profile] = await Promise.all([
-      scrapeGithubContributions(GITHUB_USERNAME),
-      GithubApiReader.fetchGithubProfileByUserId(process.env.GITHUB_USER_ID),
-    ]);
-    if (!contributions || !profile) {
+    const contributions = await scrapeGithubContributions(GITHUB_USERNAME);
+    const githubProfile = await getFromCacheOrFetch<GetGithubProfileResponse>(
+      MEMORY_CACHE_KEY.GITHUB_PROFILE,
+      GithubApiReader.fetchGithubProfileByUserId.bind(
+        this,
+        process.env.GITHUB_USER_ID
+      ),
+      { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
+    );
+    if (!contributions || !githubProfile.data) {
       throw new Error();
     }
     const githubData: GithubProfileWithContributions = {
-      ...profile,
+      ...githubProfile.data,
       contributions,
     };
-    memoryCache.put(
-      MEMORY_CACHE_KEY.GITHUB_PROFILE,
-      githubData,
-      timeMilliseconds.FIVE_MINUTES
-    );
     return {
       props: { githubProfile: githubData },
     };
