@@ -1,6 +1,6 @@
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
-import { ContactForm } from "../components/ContactForm";
+import { ContactForm } from "../components/contact-form/ContactForm";
 import { MEMORY_CACHE_KEY, timeMilliseconds } from "../constants";
 import { flexItemsCenter, headingClassNames } from "../styles/utilStyles";
 import {
