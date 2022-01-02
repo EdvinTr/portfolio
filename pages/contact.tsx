@@ -9,7 +9,7 @@ import {
 } from "../utils/getFromCacheOrFetch";
 import { fetchDiscordUserById } from "../utils/network-requests/fetchDiscordUser";
 import { GithubApiReader } from "../utils/network-requests/github/GithubApiReader";
-import { GetGithubProfileResponse } from "../utils/network-requests/github/types";
+import { GithubProfileData } from "../utils/network-requests/github/types";
 interface ContactInfo {
   contactProvider: ContactType;
   username: string;
@@ -115,7 +115,7 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
       link: `https://discord.com/users/${discordInfo.data}`,
     };
   }
-  const githubProfile = await getFromCacheOrFetch<GetGithubProfileResponse>(
+  const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
     MEMORY_CACHE_KEY.GITHUB_PROFILE,
     GithubApiReader.fetchGithubProfileByUserId.bind(null, GITHUB_USER_ID),
     cachingOptions

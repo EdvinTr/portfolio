@@ -18,7 +18,7 @@ import { getFromCacheOrFetch } from "../utils/getFromCacheOrFetch";
 import { GithubApiReader } from "../utils/network-requests/github/GithubApiReader";
 import { scrapeGithubContributions } from "../utils/network-requests/github/scrapeGithubContributions";
 import {
-  GetGithubProfileResponse,
+  GithubProfileData,
   GithubProfileWithContributions,
 } from "../utils/network-requests/github/types";
 
@@ -170,7 +170,7 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
   }
   try {
     const contributions = await scrapeGithubContributions(GITHUB_USERNAME);
-    const githubProfile = await getFromCacheOrFetch<GetGithubProfileResponse>(
+    const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
       MEMORY_CACHE_KEY.GITHUB_PROFILE,
       GithubApiReader.fetchGithubProfileByUserId.bind(
         this,

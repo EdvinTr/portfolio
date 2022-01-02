@@ -1,4 +1,4 @@
-export interface GetGithubProfileResponse {
+export interface GithubProfileData {
   login: string;
   id: number;
   node_id: string;
@@ -32,8 +32,7 @@ export interface GetGithubProfileResponse {
   created_at: string;
   updated_at: string;
 }
-export interface GithubProfileWithContributions
-  extends GetGithubProfileResponse {
+export interface GithubProfileWithContributions extends GithubProfileData {
   contributions: number | string;
 }
 

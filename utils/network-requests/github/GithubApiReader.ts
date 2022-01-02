@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetGithubProfileResponse, GithubEvent } from "./types";
+import { GithubEvent, GithubProfileData } from "./types";
 
 const githubAPI = axios.create({
   baseURL: "https://api.github.com",
@@ -22,10 +22,10 @@ export class GithubApiReader {
   }
   static async fetchGithubProfileByUserId(
     githubId: string
-  ): Promise<GetGithubProfileResponse | null> {
+  ): Promise<GithubProfileData | null> {
     try {
       const url = `/user/${githubId}`;
-      const response = await githubAPI.get<GetGithubProfileResponse>(url);
+      const response = await githubAPI.get<GithubProfileData>(url);
       if (response.status === 200) {
         return response.data;
       }
