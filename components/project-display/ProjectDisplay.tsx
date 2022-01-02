@@ -102,7 +102,6 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
                 height={552}
                 alt={`${title} screenshot`}
                 objectFit="cover"
-                placeholder="blur"
                 priority
               />
             </motion.div>

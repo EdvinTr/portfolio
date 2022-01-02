@@ -115,7 +115,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
                 className={`bg-red-50 rounded-md my-5 p-5 ${hoverScaleClassNames}`}
               >
                 <Image
-                  src={require("../public/question-mark.png")}
+                  src="/img/question-mark.png"
                   alt="question mark"
                   width={120}
                   height={120}
