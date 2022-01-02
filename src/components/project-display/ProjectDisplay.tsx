@@ -1,5 +1,4 @@
 import { PlayIcon } from "@heroicons/react/solid";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
@@ -92,10 +91,7 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
               </div>
             </div>
             {/* project screenshot */}
-            <motion.div
-              animate={{ opacity: [0, 1] }}
-              transition={{ duration: 0.8, ease: "easeIn" }}
-            >
+            <div>
               <Image
                 src={imagePath}
                 width={1120}
@@ -105,7 +101,7 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
                 placeholder="blur"
                 priority
               />
-            </motion.div>
+            </div>
           </div>
         </a>
       </Link>

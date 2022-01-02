@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import memoryCache from "memory-cache";
 import type { GetStaticProps, NextPage } from "next";
 import Image from "next/image";
@@ -88,7 +89,11 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
   };
 
   return (
-    <div className="pt-12 ">
+    <motion.div
+      className="pt-12"
+      animate={{ opacity: [0, 1] }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="md:grid md:grid-cols-5">
         <div className="md:col-span-3 md:pr-8">
           <h2 className={`${headingClassNames}`}>About Me</h2>
@@ -159,7 +164,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
             return <GithubEventCard githubEvent={githubEvent} key={idx} />;
           })}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

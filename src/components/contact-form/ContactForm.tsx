@@ -1,4 +1,5 @@
 import axios from "axios";
+import { motion } from "framer-motion";
 import React, { FormEvent, useState } from "react";
 import { toast, ToastContainer } from "react-toast";
 import { SpinnerCircularFixed } from "spinners-react";
@@ -179,23 +180,27 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           {currentMessageLength} / {MAX_MESSAGE_LENGTH} characters
         </div>
         {/* send button */}
-        <button
-          type="submit"
-          className="bg-red-500 hover:bg-red-600 transition-colors duration-150 w-full py-2 text-white rounded-md"
-        >
-          {isSending ? (
-            <SpinnerCircularFixed
-              size={30}
-              thickness={80}
-              speed={300}
-              color="rgba(255, 255, 255,1)"
-              secondaryColor="rgba(172, 57, 57, 0)"
-              className="inline"
-            />
-          ) : (
-            "Send"
-          )}
-        </button>
+        <div className="text-center">
+          <motion.button
+            animate={{ width: ["0%", "100%"] }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
+            type="submit"
+            className="bg-red-500 hover:bg-red-600 transition-colors duration-150 w-full py-2 text-white rounded-md"
+          >
+            {isSending ? (
+              <SpinnerCircularFixed
+                size={30}
+                thickness={80}
+                speed={300}
+                color="rgba(255, 255, 255,1)"
+                secondaryColor="rgba(172, 57, 57, 0)"
+                className="inline"
+              />
+            ) : (
+              "Send"
+            )}
+          </motion.button>
+        </div>
       </form>
       <ToastContainer />
     </div>

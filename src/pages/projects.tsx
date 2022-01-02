@@ -1,11 +1,15 @@
+import { motion } from "framer-motion";
 import type { NextPage } from "next";
 import projectsData from "../components/project-display/project-data";
 import { ProjectDisplay } from "../components/project-display/ProjectDisplay";
 import { headingClassNames } from "../styles/utilStyles";
-
 const ProjectsPage: NextPage = () => {
   return (
-    <div className="pt-12">
+    <motion.div
+      className="pt-12"
+      animate={{ opacity: [0, 1] }}
+      transition={{ duration: 0.5 }}
+    >
       <h2 data-cy="page-heading" className={`${headingClassNames}`}>
         Projects
       </h2>
@@ -19,7 +23,7 @@ const ProjectsPage: NextPage = () => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
