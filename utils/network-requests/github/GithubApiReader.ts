@@ -1,10 +1,8 @@
 import axios from "axios";
 import { GetGithubProfileResponse, GithubEvent } from "./types";
 
-const GITHUB_API_URL = "https://api.github.com";
-
 const githubAPI = axios.create({
-  baseURL: GITHUB_API_URL,
+  baseURL: "https://api.github.com",
 });
 
 export class GithubApiReader {
