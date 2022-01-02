@@ -5,7 +5,7 @@ import { SpinnerCircularFixed } from "spinners-react";
 const inputClassNames =
   "w-full rounded-md border border-gray-200 focus:border-red-500 focus:ring-red-500 placeholder:text-gray-400";
 const MAX_MESSAGE_LENGTH = 500;
-
+const MAX_SUBJECT_LENGTH = 50;
 interface FormMessageBody {
   name: string;
   email: string;
@@ -51,7 +51,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         from_subject: subject,
         from_message: message,
       };
-      const data = {
+      const requestBody = {
         service_id: emailjsServiceId,
         template_id: emailjsTemplateId,
         user_id: emailjsUserId,
@@ -59,7 +59,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       };
       const emailResponse = await axios.post(
         "https://api.emailjs.com/api/v1.0/email/send",
-        data
+        requestBody
       );
       if (emailResponse.status === 200) {
         showSuccessToast();
@@ -74,6 +74,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       }, 5000);
     }
   };
+
   const resetForm = (): void => {
     setFormData({
       name: "",
@@ -130,6 +131,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               Subject
             </label>
             <input
+              maxLength={MAX_SUBJECT_LENGTH}
               id="subject"
               type="text"
               className={inputClassNames}
