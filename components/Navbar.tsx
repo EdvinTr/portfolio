@@ -36,10 +36,6 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
   const isActivePath = (path: string) => {
     return router.pathname === path;
   };
-  // TODO
-  // 2. Why are we placing links inside an array?
-  // 3. Can we also cache the recent events from github?
-  // 4. Smooth in animation on GithubEvents load
   return (
     <Fragment>
       <nav className="flex items-center justify-between">

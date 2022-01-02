@@ -58,7 +58,6 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           error: null,
           isLoading: true,
         }));
-        //const githubEvents = await getGithubEvents(GITHUB_USERNAME);
         const githubEvents = await GithubApiReader.fetchGithubEventsByUsername(
           GITHUB_USERNAME
         );
