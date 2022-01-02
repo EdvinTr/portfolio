@@ -91,7 +91,87 @@ const ContactPage: NextPage<ContactPageProps> = ({
   );
 };
 
+const getFromCacheOrFetch = async (
+  memoryKey: MEMORY_CACHE_KEY,
+  fetchFunction: Function
+) => {};
+
 export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
+  const contactInfo: ContactPageProps = {};
+  const cachedGithubProfile: GetGithubProfileResponse | undefined =
+    memoryCache.get(MEMORY_CACHE_KEY.GITHUB_PROFILE);
+
+  const cachedDiscordUsername = memoryCache.get(
+    MEMORY_CACHE_KEY.DISCORD_USERNAME
+  );
+
+  if (cachedGithubProfile) {
+    contactInfo.githubInfo = {
+      contactProvider: ContactType.GITHUB,
+      username: cachedGithubProfile.login,
+      link: `https://github.com/${cachedGithubProfile.login}`,
+    };
+  }
+
+  if (cachedDiscordUsername) {
+    contactInfo.discordInfo = {
+      contactProvider: ContactType.DISCORD,
+      username: cachedDiscordUsername,
+      link: `https://discord.com/users/${cachedDiscordUsername}`,
+    };
+  }
+  if (cachedDiscordUsername && cachedGithubProfile) {
+    console.log("i return both");
+
+    return {
+      props: { ...contactInfo },
+    };
+  }
+  try {
+    const { GITHUB_USER_ID, DISCORD_USER_ID } = process.env;
+    const response = await GithubApiReader.fetchGithubProfileByUserId(
+      GITHUB_USER_ID
+    );
+    const username = response?.data?.login;
+    if (username) {
+      contactInfo.githubInfo = {
+        contactProvider: ContactType.GITHUB,
+        username: username,
+        link: `https://github.com/${username}`,
+      };
+      memoryCache.put(
+        MEMORY_CACHE_KEY.GITHUB_PROFILE,
+        response.data,
+        timeMilliseconds.FIVE_MINUTES
+      );
+    }
+
+    const discordUsername = await fetchDiscordUserById(DISCORD_USER_ID);
+    if (discordUsername) {
+      contactInfo.discordInfo = {
+        contactProvider: ContactType.DISCORD,
+        username: discordUsername,
+        link: `https://discord.com/users/${discordUsername}`,
+      };
+      memoryCache.put(
+        MEMORY_CACHE_KEY.DISCORD_USERNAME,
+        discordUsername,
+        timeMilliseconds.FIVE_MINUTES
+      );
+    }
+    return {
+      props: {
+        ...contactInfo,
+      },
+    };
+  } catch {
+    return {
+      props: { ...contactInfo },
+    };
+  }
+};
+
+/* export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
   const cachedContactData: ContactPageProps | undefined = memoryCache.get(
     MEMORY_CACHE_KEY.CONTACT_INFO
   );
@@ -150,5 +230,5 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
     };
   }
 };
-
+ */
 export default ContactPage;

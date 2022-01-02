@@ -1,6 +1,7 @@
 export enum MEMORY_CACHE_KEY {
   GITHUB_PROFILE = "GITHUB_PROFILE",
   CONTACT_INFO = "CONTACT_INFO",
+  DISCORD_USERNAME = "DISCORD_USERNAME",
 }
 
 export const timeMilliseconds = {
