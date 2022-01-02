@@ -7,7 +7,11 @@ import {
   CachingOptions,
   getFromCacheOrFetch,
 } from "../utils/getFromCacheOrFetch";
-import { fetchDiscordUserById } from "../utils/network-requests/fetchDiscordUser";
+import {
+  DiscordUser,
+  fetchDiscordUserById,
+  getDiscordUsernameFromData,
+} from "../utils/network-requests/fetchDiscordUser";
 import { GithubApiReader } from "../utils/network-requests/github/GithubApiReader";
 import { GithubProfileData } from "../utils/network-requests/github/types";
 interface ContactInfo {
@@ -103,15 +107,16 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
     ttl: timeMilliseconds.FIVE_MINUTES,
   };
 
-  const discordInfo = await getFromCacheOrFetch<string | null>(
+  const discordInfo = await getFromCacheOrFetch<DiscordUser | null>(
     MEMORY_CACHE_KEY.DISCORD_USERNAME,
     fetchDiscordUserById.bind(this, DISCORD_USER_ID),
     cachingOptions
   );
   if (discordInfo.data) {
+    const discordUser = getDiscordUsernameFromData(discordInfo.data);
     contactInfo.discordInfo = {
       contactProvider: ContactType.DISCORD,
-      username: discordInfo.data,
+      username: discordUser || "",
       link: `https://discord.com/users/${discordInfo.data}`,
     };
   }
