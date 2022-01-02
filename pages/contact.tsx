@@ -102,10 +102,10 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
   }
 
   const contactInfo: ContactPageProps = {};
-  const { GITHUB_USER_ID, DISCORD_USER_ID } = process.env;
   const cachedGithubProfileData: GetGithubProfileResponse | undefined =
     memoryCache.get(MEMORY_CACHE_KEY.GITHUB_PROFILE);
   try {
+    const { GITHUB_USER_ID, DISCORD_USER_ID } = process.env;
     if (!cachedGithubProfileData) {
       const response = await GithubApiReader.fetchGithubProfileByUserId(
         GITHUB_USER_ID
