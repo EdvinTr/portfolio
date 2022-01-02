@@ -12,7 +12,10 @@ export class GithubApiReader {
     try {
       const url = `/users/${username}/events`;
       const response = await githubAPI.get<GithubEvent[]>(url);
-      return response;
+      if (response.status === 200) {
+        return response.data;
+      }
+      throw new Error();
     } catch {
       return null;
     }
@@ -21,7 +24,10 @@ export class GithubApiReader {
     try {
       const url = `/user/${githubId}`;
       const response = await githubAPI.get<GetGithubProfileResponse>(url);
-      return response;
+      if (response.status === 200) {
+        return response.data;
+      }
+      throw new Error();
     } catch {
       return null;
     }

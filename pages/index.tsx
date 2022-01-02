@@ -59,12 +59,12 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           GITHUB_USERNAME
         );
 
-        if (!githubEvents || !githubEvents.data) {
+        if (!githubEvents) {
           throw new Error();
         }
         setGithubEventsData((g) => ({
           ...g,
-          data: githubEvents.data,
+          data: githubEvents,
           isLoading: false,
         }));
       } catch (err: any) {
@@ -174,7 +174,7 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
       throw new Error();
     }
     const githubData: GithubProfileWithContributions = {
-      ...profile?.data,
+      ...profile,
       contributions,
     };
     memoryCache.put(
