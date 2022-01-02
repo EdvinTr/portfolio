@@ -108,7 +108,7 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
   };
 
   const discordInfo = await getFromCacheOrFetch<DiscordUser | null>(
-    MEMORY_CACHE_KEY.DISCORD_USERNAME,
+    MEMORY_CACHE_KEY.DISCORD_USER,
     fetchDiscordUserById.bind(this, DISCORD_USER_ID),
     cachingOptions
   );

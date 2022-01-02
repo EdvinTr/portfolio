@@ -164,26 +164,43 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
 };
 
 export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
-  const value = memoryCache.get(MEMORY_CACHE_KEY.GITHUB_PROFILE);
-  if (value) {
-    return { props: { githubProfile: value } };
+  const cachedGithubProfile: GithubProfileData | null = memoryCache.get(
+    MEMORY_CACHE_KEY.GITHUB_PROFILE
+  );
+  const cachedGithubContributions = memoryCache.get(
+    MEMORY_CACHE_KEY.GITHUB_CONTRIBUTIONS
+  );
+  if (cachedGithubProfile && cachedGithubContributions) {
+    return {
+      props: {
+        githubProfile: {
+          ...cachedGithubProfile,
+          contributions: cachedGithubContributions,
+        },
+      },
+    };
   }
   try {
-    const contributions = await scrapeGithubContributions(GITHUB_USERNAME);
     const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
       MEMORY_CACHE_KEY.GITHUB_PROFILE,
       GithubApiReader.fetchGithubProfileByUserId.bind(
-        this,
+        null,
         process.env.GITHUB_USER_ID
       ),
       { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
     );
-    if (!contributions || !githubProfile.data) {
+    if (!githubProfile.data) {
       throw new Error();
     }
+
+    const contributions = await getFromCacheOrFetch<string | number>(
+      MEMORY_CACHE_KEY.GITHUB_CONTRIBUTIONS,
+      scrapeGithubContributions.bind(null, GITHUB_USERNAME),
+      { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
+    );
     const githubData: GithubProfileWithContributions = {
       ...githubProfile.data,
-      contributions,
+      contributions: contributions.data || "N/A",
     };
     return {
       props: { githubProfile: githubData },
