@@ -14,12 +14,9 @@ import {
 import { headingClassNames, hoverScaleClassNames } from "../styles/utilStyles";
 import { GithubEvent } from "../typings/GithubEventResponse.interface";
 import { calculateYearsOfCodingExperience } from "../utils/calculateYearsOfCodingExperience";
-import { getGithubContributions } from "../utils/network-requests/getGithubContributions";
-import { getGithubEvents } from "../utils/network-requests/getGithubEvents";
-import {
-  getGithubProfileById,
-  GithubProfileWithContributions,
-} from "../utils/network-requests/getGithubProfile";
+import { GithubApiReader } from "../utils/network-requests/github/GithubApiReader";
+import { scrapeGithubContributions } from "../utils/network-requests/github/scrapeGithubContributions";
+import { GithubProfileWithContributions } from "../utils/network-requests/github/types";
 
 const numberWords = [
   "zero",
@@ -57,7 +54,11 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           error: null,
           isLoading: true,
         }));
-        const githubEvents = await getGithubEvents(GITHUB_USERNAME);
+        //const githubEvents = await getGithubEvents(GITHUB_USERNAME);
+        const githubEvents = await GithubApiReader.fetchGithubEventsByUsername(
+          GITHUB_USERNAME
+        );
+
         if (!githubEvents || !githubEvents.data) {
           throw new Error();
         }
@@ -166,8 +167,8 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
   }
   try {
     const [contributions, profile] = await Promise.all([
-      getGithubContributions(GITHUB_USERNAME),
-      getGithubProfileById(process.env.GITHUB_USER_ID),
+      scrapeGithubContributions(GITHUB_USERNAME),
+      GithubApiReader.fetchGithubProfileByUserId(process.env.GITHUB_USER_ID),
     ]);
     if (!contributions || !profile) {
       throw new Error();

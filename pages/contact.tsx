@@ -5,7 +5,7 @@ import { ContactForm } from "../components/ContactForm";
 import { MEMORY_CACHE_KEY, timeMilliseconds } from "../constants";
 import { flexItemsCenter, headingClassNames } from "../styles/utilStyles";
 import { fetchDiscordUserById } from "../utils/network-requests/fetchDiscordUser";
-import { getGithubProfileById } from "../utils/network-requests/getGithubProfile";
+import { GithubApiReader } from "../utils/network-requests/github/GithubApiReader";
 interface ContactInfo {
   contactProvider: ContactType;
   username: string;
@@ -102,7 +102,9 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
   const contactInfo: ContactPageProps = {};
   const { GITHUB_USER_ID, DISCORD_USER_ID } = process.env;
   try {
-    const response = await getGithubProfileById(GITHUB_USER_ID);
+    const response = await GithubApiReader.fetchGithubProfileByUserId(
+      GITHUB_USER_ID
+    );
     const username = response?.data?.login;
     if (username) {
       contactInfo.githubInfo = {

@@ -1,9 +1,12 @@
 import axios from "axios";
 import { JSDOM } from "jsdom";
 
-export const getGithubContributions = async (
+/**
+ * Only works when called from the server.
+ *  */
+export async function scrapeGithubContributions(
   username: string
-): Promise<number | string> => {
+): Promise<number | string> {
   const { data: html } = await axios.get(`https://github.com/${username}`);
   const dom = new JSDOM(html);
   const $ = (selector: any) => dom.window.document.querySelector(selector);
@@ -18,4 +21,4 @@ export const getGithubContributions = async (
 
   const result = Number(contributions.split(",").join(""));
   return result === NaN ? "N/A" : result;
-};
+}
