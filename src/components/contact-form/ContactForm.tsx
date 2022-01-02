@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toast";
 import { SpinnerCircularFixed } from "spinners-react";
 const inputClassNames =
   "w-full rounded-md border border-gray-200 focus:border-red-500 focus:ring-red-500 placeholder:text-gray-400";
-const MAX_MESSAGE_LENGTH = 500;
+export const MAX_MESSAGE_LENGTH = 500;
 const MAX_SUBJECT_LENGTH = 50;
 interface FormMessageBody {
   name: string;
@@ -113,6 +113,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               Email
             </label>
             <input
+              data-testid="email-input"
               id="email"
               type="email"
               placeholder="example@example.com"
@@ -132,6 +133,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               Subject
             </label>
             <input
+              data-testid="subject-input"
               maxLength={MAX_SUBJECT_LENGTH}
               id="subject"
               type="text"
@@ -152,6 +154,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               Message
             </label>
             <textarea
+              data-testid="message-input"
               id="message"
               className={inputClassNames}
               required
