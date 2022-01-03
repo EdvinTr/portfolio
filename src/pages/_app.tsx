@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Router from "next/router";
@@ -12,6 +12,7 @@ import "../styles/globals.css";
 const appImageUrl = "https://i.imgur.com/CSsJjUQ.png";
 const metaDescription =
   "Edvin Trönnbergs portfolio website that includes projects, skills, contact information and more.";
+const deployedSiteURL = "https://edvin-tronnberg.vercel.app/";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>{BASE_WEBSITE_NAME}</title>
         <meta name="description" content={metaDescription} />
         {/* facebook meta */}
-        <meta property="og:url" content="https://edvin-tronnberg.vercel.app/" />
+        <meta property="og:url" content={deployedSiteURL} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={BASE_WEBSITE_NAME} />
         <meta property="og:description" content={metaDescription} />
@@ -46,10 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         {/* twitter meta */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="edvin-tronnberg.vercel.app" />
-        <meta
-          property="twitter:url"
-          content="https://edvin-tronnberg.vercel.app/"
-        />
+        <meta property="twitter:url" content={deployedSiteURL} />
         <meta name="twitter:title" content={BASE_WEBSITE_NAME} />
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:image" content={appImageUrl} />
@@ -57,25 +55,26 @@ function MyApp({ Component, pageProps }: AppProps) {
       <header>
         <Navbar />
       </header>
-      {isLoading ? (
-        <motion.div
-          initial={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          exit={{ opacity: 0 }}
-          className="flex items-center align-middle justify-center min-h-[100vh]"
-        >
-          <SpinnerCircularFixed
-            size={100}
-            thickness={80}
-            speed={300}
-            color="rgba(239, 68, 68,1)"
-            secondaryColor="rgba(172, 57, 57, 0)"
-            className="mt-4"
-          />
-        </motion.div>
-      ) : (
-        <Component {...pageProps} />
-      )}
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex items-center align-middle justify-center min-h-[100vh]"
+          >
+            <SpinnerCircularFixed
+              size={100}
+              thickness={80}
+              speed={300}
+              color="rgba(239, 68, 68,1)"
+              secondaryColor="rgba(172, 57, 57, 0)"
+              className="mt-4"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {!isLoading && <Component {...pageProps} />}
     </MyContainer>
   );
 }

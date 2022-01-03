@@ -169,6 +169,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
 };
 
 export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+  // ? this is redundant?
   const cachedGithubProfile: GithubProfileData | null = memoryCache.get(
     MEMORY_CACHE_KEY.GITHUB_PROFILE
   );
@@ -185,6 +186,7 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
       },
     };
   }
+  //!remove to here
   try {
     const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
       MEMORY_CACHE_KEY.GITHUB_PROFILE,
