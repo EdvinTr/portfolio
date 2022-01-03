@@ -15,8 +15,8 @@ import {
 } from "../utils/getFromCacheOrFetch";
 import {
   DiscordUser,
+  extractDiscordUsername,
   fetchDiscordUserById,
-  getDiscordUsernameFromData,
 } from "../utils/network-requests/fetchDiscordUser";
 import { GithubApiReader } from "../utils/network-requests/github/GithubApiReader";
 import { GithubProfileData } from "../utils/network-requests/github/types";
@@ -138,10 +138,10 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
     cachingOptions
   );
   if (discordInfo.data) {
-    const discordUser = getDiscordUsernameFromData(discordInfo.data);
+    const discordUsername = extractDiscordUsername(discordInfo.data);
     contactInfo.discordInfo = {
       contactProvider: ContactType.DISCORD,
-      username: discordUser || "",
+      username: discordUsername || "",
       link: `https://discord.com/users/${discordInfo.data}`,
     };
   }
@@ -155,10 +155,11 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
     cachingOptions
   );
   if (githubProfile.data) {
+    const githubUsername = githubProfile.data.login;
     contactInfo.githubInfo = {
       contactProvider: ContactType.GITHUB,
-      username: githubProfile.data.login,
-      link: `https://github.com/${githubProfile.data.login}`,
+      username: githubUsername,
+      link: `https://github.com/${githubUsername}`,
     };
   }
   return {

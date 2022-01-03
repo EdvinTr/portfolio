@@ -33,7 +33,7 @@ export const fetchDiscordUserById = async (
   }
 };
 
-export const getDiscordUsernameFromData = (
+export const extractDiscordUsername = (
   discordUser: DiscordUser
 ): string | null => {
   const { username, discriminator } = discordUser;
