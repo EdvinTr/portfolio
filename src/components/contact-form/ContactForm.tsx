@@ -62,10 +62,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         "https://api.emailjs.com/api/v1.0/email/send",
         requestBody
       );
-      if (emailResponse.status === 200) {
-        showSuccessToast();
-        resetForm();
+      if (emailResponse.status !== 200) {
+        throw new Error();
       }
+      showSuccessToast();
+      resetForm();
     } catch {
       showErrorToast();
     } finally {
