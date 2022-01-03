@@ -61,8 +61,8 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           error: null,
           isLoading: true,
         }));
-        const githubEvents = await GithubApiReader.fetchGithubEventsByUsername(
-          GITHUB_USERNAME
+        const githubEvents = await GithubApiReader.fetchGithubEventsByUserId(
+          process.env.NEXT_PUBLIC_GITHUB_USER_ID
         );
         if (!githubEvents) {
           throw new Error();
@@ -116,6 +116,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           {githubProfile ? (
             <GithubProfileCard githubProfile={githubProfile} />
           ) : (
+            /* fallback card */
             <a
               href={`https://github.com/${GITHUB_USERNAME}`}
               target="_blank"
@@ -181,7 +182,7 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
     MEMORY_CACHE_KEY.GITHUB_PROFILE,
     GithubApiReader.fetchGithubProfileByUserId.bind(
       null,
-      process.env.GITHUB_USER_ID
+      process.env.NEXT_PUBLIC_GITHUB_USER_ID
     ),
     cachingOptions
   );

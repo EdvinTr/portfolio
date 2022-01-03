@@ -6,11 +6,11 @@ const githubAPI = axios.create({
 });
 
 export class GithubApiReader {
-  static async fetchGithubEventsByUsername(
-    username: string
+  static async fetchGithubEventsByUserId(
+    githubUserId: string
   ): Promise<GithubEvent[] | null> {
     try {
-      const url = `/users/${username}/events`;
+      const url = `/user/${githubUserId}/events`;
       const response = await githubAPI.get<GithubEvent[]>(url);
       if (response.status === 200) {
         return response.data;
@@ -21,10 +21,10 @@ export class GithubApiReader {
     }
   }
   static async fetchGithubProfileByUserId(
-    githubId: string
+    githubUserId: string
   ): Promise<GithubProfileData | null> {
     try {
-      const url = `/user/${githubId}`;
+      const url = `/user/${githubUserId}`;
       const response = await githubAPI.get<GithubProfileData>(url);
       if (response.status === 200) {
         return response.data;
