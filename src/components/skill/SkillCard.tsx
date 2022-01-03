@@ -8,7 +8,7 @@ interface SkillCardProps extends HTMLMotionProps<"div"> {
 
 export const SkillCard: React.FC<SkillCardProps> = ({
   skill,
-  children,
+  children: _,
   ...props
 }) => {
   return (
@@ -25,9 +25,7 @@ export const SkillCard: React.FC<SkillCardProps> = ({
         {skill.name.toUpperCase()}
       </div>
       <motion.div className={`p-2`} {...props}>
-        <div>
-          <i className={`text-8xl ${skill.icon}`}></i>
-        </div>
+        <i className={`text-8xl ${skill.icon}`}></i>
       </motion.div>
     </a>
   );

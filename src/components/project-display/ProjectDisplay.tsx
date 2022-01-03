@@ -24,8 +24,8 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
     <Fragment>
       {/* heading and button container */}
       <div className="md:flex md:justify-between">
-        {/* project heading */}
         <div>
+          {/* project heading */}
           <h3 data-cy="project-title" className="text-xl font-semibold">
             {title}
           </h3>
@@ -91,20 +91,19 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
               </div>
             </div>
             {/* project screenshot */}
-            <div>
-              <Image
-                src={imagePath}
-                width={1120}
-                height={552}
-                alt={`${title} screenshot`}
-                objectFit="cover"
-                placeholder="blur"
-                priority
-              />
-            </div>
+            <Image
+              src={imagePath}
+              width={1120}
+              height={552}
+              alt={`${title} screenshot`}
+              objectFit="cover"
+              placeholder="blur"
+              priority
+            />
           </div>
         </a>
       </Link>
+      {/* long description */}
       <p className="whitespace-pre-line">{longDescription}</p>
       {/* ios and play store links */}
       {iosData || playStoreData ? (

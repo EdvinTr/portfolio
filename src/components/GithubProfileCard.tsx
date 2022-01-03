@@ -6,18 +6,17 @@ import {
 import { CodeIcon } from "@heroicons/react/solid";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { flexItemsCenter, hoverScaleClassNames } from "../styles/utilStyles";
 import { GithubProfileWithContributions } from "../utils/network-requests/github/types";
 interface GithubProfileCardProps {
   githubProfile: GithubProfileWithContributions;
 }
-
 const iconClassNames = "w-5 h-5 mr-1 ml-[-3px]";
 
-export const GithubProfileCard: React.FC<GithubProfileCardProps> = ({
+export const GithubProfileCard = ({
   githubProfile,
-}) => {
+}: GithubProfileCardProps) => {
   return (
     <Fragment>
       <a
