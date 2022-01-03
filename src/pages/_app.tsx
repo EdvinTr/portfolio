@@ -11,7 +11,7 @@ import "../styles/globals.css";
 
 const appImageUrl = "https://i.imgur.com/CSsJjUQ.png";
 const metaDescription =
-  "Edvin Trönnbergs portfolio website that includes projects, skills, contact information and more.";
+  "A personal portfolio, showcasing projects, skills, contact information and more.";
 const deployedSiteURL = "https://edvin-tronnberg.vercel.app/";
 
 function MyApp({ Component, pageProps }: AppProps) {
