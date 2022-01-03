@@ -61,16 +61,15 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
         const githubEvents = await GithubApiReader.fetchGithubEventsByUsername(
           GITHUB_USERNAME
         );
-
         if (!githubEvents) {
           throw new Error();
         }
         setGithubEventsData((g) => ({
-          ...g,
           data: githubEvents,
+          error: null,
           isLoading: false,
         }));
-      } catch (err: any) {
+      } catch {
         setGithubEventsData((g) => ({
           ...g,
           error: "Failed to load Github events",
@@ -168,35 +167,27 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
 };
 
 export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
-  try {
-    const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
-      MEMORY_CACHE_KEY.GITHUB_PROFILE,
-      GithubApiReader.fetchGithubProfileByUserId.bind(
-        null,
-        process.env.GITHUB_USER_ID
-      ),
-      { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
-    );
-    if (!githubProfile.data) {
-      throw new Error();
-    }
-    const totalGithubContributions = await getFromCacheOrFetch<string | number>(
-      MEMORY_CACHE_KEY.GITHUB_CONTRIBUTIONS,
-      scrapeGithubContributions.bind(null, GITHUB_USERNAME),
-      { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
-    );
-    const mergedData: GithubProfileWithContributions = {
-      ...githubProfile.data,
-      contributions: totalGithubContributions.data || "N/A",
-    };
-    return {
-      props: { githubProfile: mergedData },
-    };
-  } catch {
-    return {
-      props: {},
-    };
-  }
+  const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
+    MEMORY_CACHE_KEY.GITHUB_PROFILE,
+    GithubApiReader.fetchGithubProfileByUserId.bind(
+      null,
+      process.env.GITHUB_USER_ID
+    ),
+    { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
+  );
+  const totalGithubContributions = await getFromCacheOrFetch<string | number>(
+    MEMORY_CACHE_KEY.GITHUB_CONTRIBUTIONS,
+    scrapeGithubContributions.bind(null, GITHUB_USERNAME),
+    { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
+  );
+
+  const mergedData: GithubProfileWithContributions = {
+    ...githubProfile.data,
+    contributions: totalGithubContributions.data || "N/A",
+  };
+  return {
+    props: { githubProfile: mergedData },
+  };
 };
 
 export default Home;
