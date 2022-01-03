@@ -14,7 +14,10 @@ import {
 import { headingClassNames, hoverScaleClassNames } from "../styles/utilStyles";
 import { GithubEvent } from "../typings/GithubEventResponse.interface";
 import { calculateYearsOfCodingExperience } from "../utils/calculateYearsOfCodingExperience";
-import { getFromCacheOrFetch } from "../utils/getFromCacheOrFetch";
+import {
+  CachingOptions,
+  getFromCacheOrFetch,
+} from "../utils/getFromCacheOrFetch";
 import { GithubApiReader } from "../utils/network-requests/github/GithubApiReader";
 import { scrapeGithubContributions } from "../utils/network-requests/github/scrapeGithubContributions";
 import {
@@ -166,6 +169,10 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
   );
 };
 
+const cachingOptions: CachingOptions = {
+  shouldCache: true,
+  ttl: timeMilliseconds.FIVE_MINUTES,
+};
 export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
   const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
     MEMORY_CACHE_KEY.GITHUB_PROFILE,
@@ -173,12 +180,12 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
       null,
       process.env.GITHUB_USER_ID
     ),
-    { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
+    cachingOptions
   );
   const totalGithubContributions = await getFromCacheOrFetch<string | number>(
     MEMORY_CACHE_KEY.GITHUB_CONTRIBUTIONS,
     scrapeGithubContributions.bind(null, GITHUB_USERNAME),
-    { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
+    cachingOptions
   );
 
   const mergedData: GithubProfileWithContributions = {

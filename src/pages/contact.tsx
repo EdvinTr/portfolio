@@ -124,19 +124,17 @@ const ContactPage: NextPage<ContactPageProps> = ({
     </motion.div>
   );
 };
+const cachingOptions: CachingOptions = {
+  shouldCache: true,
+  ttl: timeMilliseconds.FIVE_MINUTES,
+};
 
 export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
-  const { DISCORD_USER_ID, GITHUB_USER_ID } = process.env;
   const contactInfo: ContactPageProps = {};
-
-  const cachingOptions: CachingOptions = {
-    shouldCache: true,
-    ttl: timeMilliseconds.FIVE_MINUTES,
-  };
 
   const discordInfo = await getFromCacheOrFetch<DiscordUser | null>(
     MEMORY_CACHE_KEY.DISCORD_USER,
-    fetchDiscordUserById.bind(null, DISCORD_USER_ID),
+    fetchDiscordUserById.bind(null, process.env.DISCORD_USER_ID),
     cachingOptions
   );
   if (discordInfo.data) {
@@ -150,7 +148,10 @@ export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
 
   const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
     MEMORY_CACHE_KEY.GITHUB_PROFILE,
-    GithubApiReader.fetchGithubProfileByUserId.bind(null, GITHUB_USER_ID),
+    GithubApiReader.fetchGithubProfileByUserId.bind(
+      null,
+      process.env.GITHUB_USER_ID
+    ),
     cachingOptions
   );
   if (githubProfile.data) {
