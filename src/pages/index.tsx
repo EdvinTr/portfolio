@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import memoryCache from "memory-cache";
 import type { GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -169,24 +168,6 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
 };
 
 export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
-  // ? this is redundant?
-  const cachedGithubProfile: GithubProfileData | null = memoryCache.get(
-    MEMORY_CACHE_KEY.GITHUB_PROFILE
-  );
-  const cachedGithubContributions = memoryCache.get(
-    MEMORY_CACHE_KEY.GITHUB_CONTRIBUTIONS
-  );
-  if (cachedGithubProfile && cachedGithubContributions) {
-    return {
-      props: {
-        githubProfile: {
-          ...cachedGithubProfile,
-          contributions: cachedGithubContributions,
-        },
-      },
-    };
-  }
-  //!remove to here
   try {
     const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
       MEMORY_CACHE_KEY.GITHUB_PROFILE,
@@ -199,20 +180,19 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
     if (!githubProfile.data) {
       throw new Error();
     }
-
-    const contributions = await getFromCacheOrFetch<string | number>(
+    const totalGithubContributions = await getFromCacheOrFetch<string | number>(
       MEMORY_CACHE_KEY.GITHUB_CONTRIBUTIONS,
       scrapeGithubContributions.bind(null, GITHUB_USERNAME),
       { shouldCache: true, ttl: timeMilliseconds.FIVE_MINUTES }
     );
-    const githubData: GithubProfileWithContributions = {
+    const mergedData: GithubProfileWithContributions = {
       ...githubProfile.data,
-      contributions: contributions.data || "N/A",
+      contributions: totalGithubContributions.data || "N/A",
     };
     return {
-      props: { githubProfile: githubData },
+      props: { githubProfile: mergedData },
     };
-  } catch (err: any) {
+  } catch {
     return {
       props: {},
     };
