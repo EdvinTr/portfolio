@@ -145,6 +145,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           <h4 className={`text-lg sm:text-xl font-semibold`}>GitHub</h4>
           <p className="text-sm sm:text-base">Most Recent Actions</p>
         </div>
+        {/* loading spinner */}
         {githubEventsData.isLoading && (
           <SpinnerCircularFixed
             size={50}
@@ -155,11 +156,13 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
             className="mt-4"
           />
         )}
+        {/* error */}
         {githubEventsData.error && (
           <span className="text-red-500 block pt-4">
             {githubEventsData.error}
           </span>
         )}
+        {/* events data */}
         {githubEventsData.data &&
           githubEventsData.data.map((githubEvent, idx) => {
             return <GithubEventCard githubEvent={githubEvent} key={idx} />;
