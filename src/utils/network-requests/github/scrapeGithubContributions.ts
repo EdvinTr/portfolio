@@ -6,7 +6,7 @@ import { JSDOM } from "jsdom";
  *  */
 export async function scrapeGithubContributions(
   username: string
-): Promise<number | string> {
+): Promise<number | "N/A"> {
   const { data: html } = await axios.get(`https://github.com/${username}`);
   const dom = new JSDOM(html);
   const $ = (selector: any) => dom.window.document.querySelector(selector);
