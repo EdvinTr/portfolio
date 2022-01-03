@@ -1,9 +1,9 @@
 import { PlayIcon } from "@heroicons/react/solid";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
 import { Project } from "./project-data";
-
 interface ProjectDisplayProps {
   project: Project;
 }
@@ -20,6 +20,19 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
     iosData,
     playStoreData,
   } = project;
+  const containerVariant = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  };
+  const tagVariantProps = {
+    hidden: { opacity: 0, x: -100 },
+    show: { opacity: 1, x: 0 },
+  };
   return (
     <Fragment>
       {/* heading and button container */}
@@ -31,16 +44,21 @@ export const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ project }) => {
           </h3>
           <p>{shortDescription}</p>
           {/* technology tags */}
-          <div className="">
+          <motion.div
+            variants={containerVariant}
+            initial="hidden"
+            animate="show"
+          >
             {tags.map((tag, idx) => (
-              <div
+              <motion.div
+                variants={tagVariantProps}
                 key={idx}
                 className="mr-3 text-xs bg-red-100 font-semibold inline-block px-1 uppercase"
               >
                 {tag}
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         <div className="flex items-center space-x-2 pt-6 md:pt-0">
