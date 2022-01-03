@@ -36,16 +36,9 @@ export const fetchDiscordUserById = async (
 export const getDiscordUsernameFromData = (
   discordUser: DiscordUser
 ): string | null => {
-  try {
-    const { username, discriminator } = discordUser;
-    if (username && discriminator) {
-      const possibleDiscordAccount = `${username}#${discriminator}`;
-      if (/\w+#\d{4}/.test(possibleDiscordAccount)) {
-        return possibleDiscordAccount;
-      }
-    }
-    throw new Error();
-  } catch {
+  const { username, discriminator } = discordUser;
+  if (!username || !discriminator) {
     return null;
   }
+  return `${username}#${discriminator}`;
 };
