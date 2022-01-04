@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { ContactForm } from "../components/contact-form/ContactForm";
@@ -129,7 +129,9 @@ const cachingOptions: CachingOptions = {
   ttl: timeMilliseconds.FIVE_MINUTES,
 };
 
-export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
+export const getServerSideProps: GetServerSideProps<
+  ContactPageProps
+> = async () => {
   const contactInfo: ContactPageProps = {};
 
   const discordInfo = await getFromCacheOrFetch<DiscordUser | null>(

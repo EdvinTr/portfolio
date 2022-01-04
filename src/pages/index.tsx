@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SpinnerCircularFixed } from "spinners-react";
@@ -177,7 +177,9 @@ const cachingOptions: CachingOptions = {
   shouldCache: true,
   ttl: timeMilliseconds.FIVE_MINUTES,
 };
-export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+export const getServerSideProps: GetServerSideProps<
+  HomePageProps
+> = async () => {
   const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
     MEMORY_CACHE_KEY.GITHUB_PROFILE,
     GithubApiReader.fetchGithubProfileByUserId.bind(
