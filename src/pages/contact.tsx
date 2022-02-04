@@ -144,7 +144,7 @@ export const getServerSideProps: GetServerSideProps<
     contactInfo.discordInfo = {
       contactProvider: ContactType.DISCORD,
       username: discordUsername || "",
-      link: `https://discord.com/users/${discordInfo.data}`,
+      link: `https://discord.com/users/${discordInfo.data.id}`,
     };
   }
 
