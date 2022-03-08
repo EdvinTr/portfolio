@@ -179,7 +179,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
                 githubEventsData.data.slice(0, slicedGithubEvents.length + 5)
               )
             }
-            className="bg-red-500 hover:bg-red-600 transition-colors duration-150 px-4 py-2 text-white rounded-md"
+            className="bg-red-600 hover:bg-red-700 transition-colors duration-150 px-4 py-2 text-white rounded-md"
           >
             Show more
           </button>
