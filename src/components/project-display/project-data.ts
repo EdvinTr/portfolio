@@ -18,6 +18,26 @@ export interface Project {
 // Using require statement to make next/image placeholder prop work
 const projects: Project[] = [
   {
+    title: "Staytard",
+    shortDescription:
+      "A fullstack clone of the e-commerce website stayhard.se!",
+    longDescription: `E-commerce websites typically require good search engine optimization (SEO) and a good user experience. By using Next JS, I was able to take advantage of its server-side rendering (SSR) and static site generation capabilities. By swapping out meta tags depending upon the current page it also allows for changing the open-graph (OG) meta tags dynamically which are responsible for those page preview links many websites use. 
+    It was a challenging project and a great way to explore the power of Next!`,
+    imagePath: require("../../../public/img/staytard-frontpage.jpg"),
+    demoURL: "https://staytard.vercel.app",
+    tags: [
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Node.JS",
+      "Apollo",
+      "PostgreSQL",
+      "GraphQL",
+      "Next.JS",
+      "Stripe",
+    ],
+  },
+  {
     title: "Scoreflicks",
     shortDescription: "IMDb ratings for Netflix movies and TV shows!",
     longDescription: `On a rainy spring evening, I was browsing through Netflix, trying to figure out what would be worth watching. With the word 'worth', I, as many others heavily factor in the IMDb rating in this evaluation process. I found myself constantly checking the titles against IMDb, and yes, it was getting tiresome. At that point I looked for some tools to make this process faster, but sadly I couldn't find what I was looking for. That's when I got the thought that maybe I could build it myself, and so Scoreflicks was born. 

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SpinnerCircularFixed } from "spinners-react";
@@ -53,6 +53,9 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
     data: null,
     error: null,
   });
+  const [slicedGithubEvents, setSlicedGithubEvents] = useState<GithubEvent[]>(
+    []
+  );
   useEffect(() => {
     const fetchGithubEvents = async (): Promise<void> => {
       try {
@@ -72,6 +75,7 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           error: null,
           isLoading: false,
         }));
+        setSlicedGithubEvents(githubEvents.slice(0, 5));
       } catch {
         setGithubEventsData((g) => ({
           ...g,
@@ -164,10 +168,22 @@ const Home: NextPage<HomePageProps> = ({ githubProfile }) => {
           </span>
         )}
         {/* events data */}
-        {githubEventsData.data &&
-          githubEventsData.data.map((githubEvent, idx) => {
+        {slicedGithubEvents &&
+          slicedGithubEvents.map((githubEvent, idx) => {
             return <GithubEventCard githubEvent={githubEvent} key={idx} />;
           })}
+        {slicedGithubEvents.length !== githubEventsData?.data?.length && (
+          <button
+            onClick={() =>
+              setSlicedGithubEvents(
+                githubEventsData.data.slice(0, slicedGithubEvents.length + 5)
+              )
+            }
+            className="bg-red-500 hover:bg-red-600 transition-colors duration-150 px-4 py-2 text-white rounded-md"
+          >
+            Show more
+          </button>
+        )}
       </div>
     </motion.div>
   );
@@ -177,9 +193,7 @@ const cachingOptions: CachingOptions = {
   shouldCache: true,
   ttl: timeMilliseconds.FIVE_MINUTES,
 };
-export const getServerSideProps: GetServerSideProps<
-  HomePageProps
-> = async () => {
+export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
   const githubProfile = await getFromCacheOrFetch<GithubProfileData>(
     MEMORY_CACHE_KEY.GITHUB_PROFILE,
     GithubApiReader.fetchGithubProfileByUserId.bind(
@@ -200,6 +214,7 @@ export const getServerSideProps: GetServerSideProps<
   };
   return {
     props: { githubProfile: mergedData },
+    revalidate: 100,
   };
 };
 
