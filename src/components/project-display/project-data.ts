@@ -25,6 +25,7 @@ const projects: Project[] = [
     It was a challenging project and a great way to explore the power of Next!`,
     imagePath: require("../../../public/img/staytard-frontpage.jpg"),
     demoURL: "https://staytard.vercel.app",
+    codeURL: "https://github.com/EdvinTr/staytard-frontend",
     tags: [
       "React",
       "TypeScript",
