@@ -20,6 +20,9 @@ export const GithubEventCard: React.FC<GithubEventCardProps> = ({
       case "IssuesEvent":
         return <span className="text-orange-700">Issue</span>;
 
+      case "PullRequestEvent":
+        return <span className="text-purple-700">Pull Request</span>;
+
       case "PublicEvent":
         return <span>Change visibility to public</span>;
       default:
