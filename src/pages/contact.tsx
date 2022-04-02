@@ -43,7 +43,7 @@ const ContactPage: NextPage<ContactPageProps> = ({
 }) => {
   return (
     <motion.div
-      className="pt-12"
+      className="pt-12 min-h-screen"
       animate={{ opacity: [0, 1] }}
       transition={{ duration: 0.5 }}
     >
