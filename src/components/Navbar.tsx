@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { classnames } from "tailwindcss-classnames";
+import { APP_ROUTE } from "../constants";
 
 interface NavbarProps {}
 
@@ -22,11 +23,11 @@ const navLinkClassNames = classnames(
 
 const routes = [
   {
-    path: "/projects",
+    path: APP_ROUTE.PROJECTS,
     name: "Projects",
   },
   {
-    path: "/contact",
+    path: APP_ROUTE.CONTACT,
     name: "Contact",
   },
 ];
@@ -39,7 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
   return (
     <Fragment>
       <nav className="flex items-center justify-between">
-        <Link href="/">
+        <Link href={APP_ROUTE.INDEX}>
           <a>
             <h1 className="font-extrabold text-gray-800 text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-3xl">
               Edvin Trönnberg
@@ -53,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
                 <a
                   className={`${navLinkClassNames} ${
                     isActivePath(path) ? activeRouteClassNames : "border-white"
-                  } ${path === "/contact" && "bg-gray-100"}`}
+                  } ${path === APP_ROUTE.CONTACT && "bg-gray-100"}`}
                 >
                   {name}
                 </a>
